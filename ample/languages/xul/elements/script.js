@@ -33,7 +33,7 @@ cXULElement_script.handlers	= {
 	},
 	"DOMNodeInsertedIntoDocument":	function(oEvent) {
 		if (this.attributes["src"])
-			this.$getContainer().src  = this.attributes["src"];
+			this.$getContainer().src  = fUtilities_decodeEntities(this.attributes["src"]);
 		else
 		if (this.firstChild) {
 			var oElement	= document.body.appendChild(document.createElement("script"));
@@ -51,6 +51,10 @@ cXULElement_script.prototype.$getTagOpen	= function() {
 // Element Render: close
 cXULElement_script.prototype.$getTagClose	= function() {
     return '</script>';
+};
+
+function fUtilities_decodeEntities(sValue) {
+	return sValue.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 };
 
 // Register Element
