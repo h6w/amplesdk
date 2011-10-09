@@ -23,7 +23,7 @@ cXULElement_script.handlers	= {
 			switch (oEvent.attrName) {
 				case "src":
 					if (oEvent.newValue)
-						this.$getContainer().src  = oEvent.newValue;
+						this.$getContainer().src  = cXULElement.decodeXMLEntities(oEvent.newValue || '');
 					break;
 
 				default:
@@ -33,12 +33,12 @@ cXULElement_script.handlers	= {
 	},
 	"DOMNodeInsertedIntoDocument":	function(oEvent) {
 		if (this.attributes["src"])
-			this.$getContainer().src  = fUtilities_decodeEntities(this.attributes["src"]);
+			this.$getContainer().src  = cXULElement.decodeXMLEntities(this.attributes["src"]);
 		else
 		if (this.firstChild) {
 			var oElement	= document.body.appendChild(document.createElement("script"));
 			oElement.type	= "text/javascript";
-			oElement.text	= this.firstChild.nodeValue;
+			oElement.text	= cXULElement.decodeXMLEntities(this.firstChild.nodeValue);
 		}
 	}
 };
@@ -51,10 +51,6 @@ cXULElement_script.prototype.$getTagOpen	= function() {
 // Element Render: close
 cXULElement_script.prototype.$getTagClose	= function() {
     return '</script>';
-};
-
-function fUtilities_decodeEntities(sValue) {
-	return sValue.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 };
 
 // Register Element
