@@ -776,9 +776,12 @@ function fBrowser_getResponseDocument(oRequest) {
 		// Bugfix FF4 (remote XUL)
 		if (bGecko)
 			oDocument	= fBrowser_parseXML(sText);
+
+		if (bWebKit && !oDocument)
+			oDocument	= fBrowser_parseXML(sText);
 	}
 	// Check if there is no error in document
-	if (!oDocument || ((bTrident && nVersion < 9 && oDocument.parseError != 0) || !oDocument.documentElement || oDocument.getElementsByTagName("parsererror").length))
+	if (!oDocument || ((bTrident && nVersion < 9 && oDocument.parseError != 0) || !oDocument.documentElement || oDocument.getElementsByTagName("parsererror").length <= 0))
 		return null;
 	return oDocument;
 };
@@ -1109,11 +1112,11 @@ function fBrowser_processScripts() {
 		else
 		if (sType == "application/ample+javascript" || sType == "text/ample+javascript") {
 			if (sSrc)
-				sText	= fBrowser_load(sSrc, "text/javascript");
+				oRequest	= fBrowser_load(sSrc, "text/javascript");
 
 			// Try executing
 			try {
-				fBrowser_eval(sText);
+				fBrowser_eval(oRequest.responseText);
 			} catch (oException) {
 //->Debug
 				fUtilities_warn(sGUARD_JAVASCRIPT_SYNTAX_WRN, [oException.message]);
