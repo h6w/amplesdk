@@ -1102,6 +1102,12 @@ function fBrowser_processScripts() {
 													oDocument.parseError.srcText + '\n' +
 													new cArray(oDocument.parseError.linepos).join('-') + '^';
 			    }
+                //Unknown failure on our part (No Document or Document ParserError).
+                else {
+					oElementNew.innerText	= 'XML Parsing Error: ' + 'Unknown failure to parse.' + '\n' +
+													'Location: ' + (oUALocation) + '\n';
+                    oElementNew.innerText	+= 'Document ' + (oDocument?'exists':'does not exist'); 
+                }
 //<-Debug
 
 //->Debug
