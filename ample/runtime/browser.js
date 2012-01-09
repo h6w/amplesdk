@@ -1104,7 +1104,7 @@ function fBrowser_processScripts() {
 			    }
                 //Unknown failure on our part (No Document or Document ParserError).
                 else {
-					oElementNew.innerText	= 'XML Parsing Error: ' + 'Unknown failure to parse.' + '\n' +
+					oElementNew.innerText	= 'XML Parsing Error: ' + 'Unknown failure to parse.  This should not happen.  It means that the browser did not return a parsing error we understand.' + '\n' +
 													'Location: ' + (oUALocation) + '\n';
                     oElementNew.innerText	+= 'Document ' + (oDocument?'exists':'does not exist'); 
                 }
