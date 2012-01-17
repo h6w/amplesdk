@@ -12,9 +12,9 @@ function TextEditBox(name,option,onChange) {
 }
 TextEditBox.prototype.create = function() {
 	//this.func = func;
-	this.element = xml2Dom(
-			<textbox oninput="this.editBox.onChange(this.editBox)"/>//emptytext={this.name}
-			);
+	this.element = xml2Dom(' \
+			<textbox oninput="this.editBox.onChange(this.editBox)"/>//emptytext={this.name} \
+			');
 	this.element.editBox = this;
 	return this.element;
 }
@@ -83,12 +83,12 @@ function SimpleNumberEditBox(name, option, onChange) {
 SimpleNumberEditBox.prototype.create = function() {
 	var scrollbarId = "ID"+Math.random();
 	var xml = //
-		<hbox>
-			<textbox oninput="this.editBox.onChange(this.editBox);changeScrollbar(this.nextSibling, this.value)" flex="1" style="text-align:right">
-				<observes onbroadcast="syncScrollbarWithTextbox(this.parentNode.nextSibling, this.parentNode); if(!this.editBox.onUpdate)this.editBox.onChange(this.editBox)" element={scrollbarId} attribute="curpos"/>
-			</textbox>
-			<scrollbar width="150px" flex="2" maxpos={("max" in this.option) ? this.option.max : 100} id={scrollbarId}/>
-		</hbox>;
+		'<hbox> \
+			<textbox oninput="this.editBox.onChange(this.editBox);changeScrollbar(this.nextSibling, this.value)" flex="1" style="text-align:right"> \
+				<observes onbroadcast="syncScrollbarWithTextbox(this.parentNode.nextSibling, this.parentNode); if(!this.editBox.onUpdate)this.editBox.onChange(this.editBox)" element={scrollbarId} attribute="curpos"/> \
+			</textbox> \
+			<scrollbar width="150px" flex="2" maxpos={("max" in this.option) ? this.option.max : 100} id={scrollbarId}/> \
+		</hbox>';
 	//this.func = func;
 	
 	var hbox = xml2Dom(xml);
@@ -139,26 +139,26 @@ NumberEditBox.prototype.create = function() {
 	//var rate = 1/Math.pow(10, this.option["decimalplaces"]);
 	var maxpos = ("max" in this.option ? this.option.max : 100) * Math.pow(10, this.option["decimalplaces"]);
 	//type="number" max={this.option["max"]} increment={rate} decimalplaces={this.option["decimalplaces"]} 
-	var xml = 
-	<hbox flex="1">
-		<textbox onchange="this.editBox.onChange(this.editBox)" flex="1" minwidth="42" size="6" style="text-align:right">
-			<observes onbroadcast="syncScrollbarWithTextbox(this.parentNode.nextSibling.nextSibling, this.parentNode, 1/this.rate); if(!this.editBox.onUpdate)this.editBox.onChange(this.editBox)" element={scrollbarId} attribute="curpos" />
-		</textbox>
-		<menulist editable="true" sizetopopup="none" width="42px">
-			<menupopup>
-			<menuitem selected="true" label="px" value="px"/>
-			<menuitem label="%"/>
-			<menuitem label="em"/>
-			</menupopup>
-		</menulist>
-		<scrollbar flex="2" minwidth="70" maxpos={maxpos} id={scrollbarId}/>
-	</hbox>
+	var xml = ' \
+	<hbox flex="1"> \
+		<textbox onchange="this.editBox.onChange(this.editBox)" flex="1" minwidth="42" size="6" style="text-align:right"> \
+			<observes onbroadcast="syncScrollbarWithTextbox(this.parentNode.nextSibling.nextSibling, this.parentNode, 1/this.rate); if(!this.editBox.onUpdate)this.editBox.onChange(this.editBox)" element={scrollbarId} attribute="curpos" /> \
+		</textbox> \
+		<menulist editable="true" sizetopopup="none" width="42px"> \
+			<menupopup> \
+			<menuitem selected="true" label="px" value="px"/> \
+			<menuitem label="%"/> \
+			<menuitem label="em"/> \
+			</menupopup> \
+		</menulist> \
+		<scrollbar flex="2" minwidth="70" maxpos={maxpos} id={scrollbarId}/> \
+	</hbox>';
 	if (this.option["nounit"]) {
-		delete xml.menulist.menupopup.*;
-		xml.menulist.menupopup.appendChild(<menuitem label="" value=""/>);
+		//delete xml.menulist.menupopup.*; //Special notation
+		xml.menulist.menupopup.appendChild('<menuitem label="" value=""/>');
 	}
 	//if ("initial" in this.option) {
-	xml.scrollbar.@curpos = this.option["initial"] * Math.pow(10, this.option['decimalplaces']);
+	xml.scrollbar.setAttribute('curpos',this.option["initial"] * Math.pow(10, this.option['decimalplaces']));
 	//}
 	var hbox = xml2Dom(xml);
 	this.units =  ["px", "%", "em"];
@@ -215,12 +215,12 @@ function ColorEditBox(name, option, onChange) {
 }
 
 ColorEditBox.prototype.create = function() {
-	this.element = xml2Dom(
-			<hbox>
-				<textbox  oninput="this.editBox.onChange(this.editBox);" flex="1"/>
-				<colorpicker onchange="this.previousSibling.value = this.color; this.editBox.onChange(this.editBox)" flex="1" type="button"/>
-			</hbox>
-			);
+	this.element = xml2Dom(' \
+			<hbox> \
+				<textbox  oninput="this.editBox.onChange(this.editBox);" flex="1"/> \
+				<colorpicker onchange="this.previousSibling.value = this.color; this.editBox.onChange(this.editBox)" flex="1" type="button"/> \
+			</hbox> \
+			');
 	this.textbox = this.element.firstChild;
 	this.colorpicker = this.element.lastChild;
 
@@ -250,15 +250,15 @@ function RadioEditBox(name, option, onChange) {
 }
 
 RadioEditBox.prototype.create = function() {
-	var radiogroup_xml = <radiogroup oncommand="this.editBox.onChange(this.editBox)" 
-				onclick="if(event.button==2) {this.editBox.init(); this.editBox.onChange(this.editBox)}"
-				onkeypress="if(event.keyCode== event.DOM_VK_DELETE) {this.editBox.init(); this.editBox.onChange(this.editBox)}" orient="horizontal"  equalsize="always" />
+	var radiogroup_xml = '<radiogroup oncommand="this.editBox.onChange(this.editBox)" \
+				onclick="if(event.button==2) {this.editBox.init(); this.editBox.onChange(this.editBox)}" \
+				onkeypress="if(event.keyCode== event.DOM_VK_DELETE) {this.editBox.init(); this.editBox.onChange(this.editBox)}" orient="horizontal"  equalsize="always" />';
 
 	var radiogroup = xml2Dom(radiogroup_xml);
 	radiogroup.editBox = this;
 
 	for (var i = 0; i < this.option.values.length; i++) {
-		var radio = xml2Dom(<radio label={this.option.values[i]} flex={1} value={this.option.values[i]}/>);
+		var radio = xml2Dom('<radio label={this.option.values[i]} flex={1} value={this.option.values[i]}/>');
 		radiogroup.appendChild(radio);
 	}
 	this.element = radiogroup;

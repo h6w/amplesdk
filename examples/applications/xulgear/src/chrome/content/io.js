@@ -282,7 +282,12 @@ function reCreate(treeitem, parentTreeitem) {
 	if (element.nodeType == element.PROCESSING_INSTRUCTION_NODE) {
 		treeitem.target = parentTreeitem.target.appendChild(createPI(element.nodeName, element.attrs));
 	} else if (element.nodeType == element.ELEMENT_NODE && element.attrs) { //do nothing if attrs is not defined
-		var el = createXULElement(element.tagName, [{name: i, value:element.attrs[i]} for (i in element.attrs)], copyObject(element.styles));
+		// var el = createXULElement(element.tagName, [{name: i, value:element.attrs[i]} for (i in element.attrs)], copyObject(element.styles));
+        var objs = [];
+        for (i in element.attrs) {
+            objs.push({name: i, value:element.attrs[i]}); 
+        }
+		var el = createXULElement(element.tagName, objs, copyObject(element.styles));
 		treeitem.target = parentTreeitem.target.appendChild(el);
 
 		var treeitems = treeitem.lastChild.childNodes;//getElementsByTagName('treeitem');

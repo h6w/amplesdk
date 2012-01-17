@@ -32,15 +32,15 @@ function showTabbox() {
 	}
 	var parent = targetWindow.parentNode;
 
-	var tabbox = 
-		<tabbox flex="1">
-			<tabs>
-				<tab flex="1" class="main-tab" label="Design"/>
-			</tabs>
-			<tabpanels flex="1" style="margin:0px;padding:0px">
-				<tabpanel flex="1" style="margin:0px; padding:0px"/>
-			</tabpanels>
-		</tabbox>;
+	var tabbox = ' \
+		<tabbox flex="1"> \
+			<tabs> \
+				<tab flex="1" class="main-tab" label="Design"/> \
+			</tabs> \
+			<tabpanels flex="1" style="margin:0px;padding:0px"> \
+				<tabpanel flex="1" style="margin:0px; padding:0px"/> \
+			</tabpanels> \
+		</tabbox>';
 	
 	tabbox = xml2Dom(tabbox);
 	tabbox.lastChild.firstChild.appendChild(targetWindow);
@@ -90,9 +90,9 @@ function showTextboxOnTabbox() {
 		} else {
 			var tabbox = showTabbox();
 			var treeitem = getSelectedTreeitems()[0];
-			treeitem.tab = tabbox.firstChild.appendChild(xml2Dom(<tab flex="1" class="main-tab" ondblclick="removeTextnodeTab(this)" label={treeitem.target.parentNode.tagName+"#text"}/>));
-			treeitem.tabpanel = tabbox.lastChild.appendChild(xml2Dom(
-						<tabpanel><textbox value={treeitem.target.data} onkeypress="if (event.keyCode == event.DOM_VK_TAB &amp;&amp; !event.ctrlKey) {insertTab(this);this.treeitem.target.data=(this.value); return false;}" oninput="this.treeitem.target.data=(this.value);" multiline="true" flex="1" style="font-family: monospace"/></tabpanel>));
+			treeitem.tab = tabbox.firstChild.appendChild(xml2Dom('<tab flex="1" class="main-tab" ondblclick="removeTextnodeTab(this)" label={treeitem.target.parentNode.tagName+"#text"}/>'));
+			treeitem.tabpanel = tabbox.lastChild.appendChild(xml2Dom(' \
+						<tabpanel><textbox value={treeitem.target.data} onkeypress="if (event.keyCode == event.DOM_VK_TAB &amp;&amp; !event.ctrlKey) {insertTab(this);this.treeitem.target.data=(this.value); return false;}" oninput="this.treeitem.target.data=(this.value);" multiline="true" flex="1" style="font-family: monospace"/></tabpanel>'));
 			treeitem.tabpanel.firstChild.treeitem = treeitem;
 			treeitem.tab.tabpanel = treeitem.tabpanel;
 			treeitem.tab.treeitem = treeitem;
@@ -174,12 +174,12 @@ function changeLayout(num) {
 
 function changeLayoutFromXML(xml) {
 	if ("@id" in xml) {
-		var el = document.getElementById(xml.@id);
+		var el = document.getElementById(xml.getAttribute(id));
 	} else {
 		var el = document.createElement(xml.name());
 	}
 	
-	for each (i in xml.elements()) {
+	for (i in xml.elements()) {
 		el.appendChild(changeLayoutFromXML(i));
 	}
 	return el;

@@ -1,19 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE xulgeartrans SYSTEM "chrome://xulgear/locale/translations.dtd">
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xulgeartrans [
+    <!ENTITY visit_us_at "visit us at">
+    <!ENTITY autorun "Autorun">
+    <!ENTITY settings "Settings">
+    <!ENTITY xul_gear_preferences "XUL Gear Preferences">
+    <!ENTITY close "Close">
+    <!ENTITY selected "Selected">
+    <!ENTITY mouse_over "Mouse over">
+    <!ENTITY style "Style">
+    <!ENTITY create_processing_instruction "create Processing Instruction">
+    <!ENTITY events "Events">
+    <!ENTITY styles "Styles">
+    <!ENTITY attributes "Attributes">
+    <!ENTITY xul_element "XUL Element">
+    <!ENTITY paste "Paste">
+    <!ENTITY copy "Copy">
+    <!ENTITY cut "Cut">
+    <!ENTITY down "Down">
+    <!ENTITY up "Up">
+    <!ENTITY new_textnode "New TextNode">
+    <!ENTITY new_element "New Element">
+    <!ENTITY reload "Reload()">
+    <!ENTITY layout_b "Layout B">
+    <!ENTITY layout_a "Layout A">
+    <!ENTITY hide_main_tabbox "Hide Main tabbox">
+    <!ENTITY show_main_tabbox "Show Main tabbox">
+    <!ENTITY show_new_elements_panel "Show New Elements Panel">
+    <!ENTITY redo "Redo">
+    <!ENTITY undo "Undo">
+    <!ENTITY insert_overlay "Insert Overlay">
+    <!ENTITY insert_stylesheet "Insert Stylesheet">
+    <!ENTITY exit "Exit">
+    <!ENTITY new "New">
+    <!ENTITY open "Open">
+    <!ENTITY save "Save">
+    <!ENTITY saveas "Save As">
+    <!ENTITY runxulgear "Run XUL Gear">
+    <!ENTITY delete "Delete">
+    <!ENTITY export "Export xul">
+]>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <?xml-stylesheet href="chrome://xulgear/skin/skin.css" type="text/css"?>
 
 <!--<?xul-overlay href="styles.xul"?>-->
 <window persist="width height" id="root-window" onmouseup="var e = window.document.getElementById('element-tree');if(e.ondrag){e.ondrag=false}" width="1024" height="768" title="XUL Gear" onload="initWindow(event)" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" orient="horizontal">
 
-	<script src="json2.js"/>
-	<script src="project.js"/>
-	<script src="xulgear_data.js"/>
-	<script src="io.js"/>
-	<script src="move.js"/>
-	<script src="layout.js"/>
-	<script src="edit.js"/>
-	<script src="xulgear.js"/>
+	<script type="application/javascript;version=1.7" src="json2.js"/>
+	<script type="application/javascript;version=1.7" src="project.js"/>
+	<script type="application/javascript;version=1.7" src="xulgear_data.js"/>
+	<script type="application/javascript;version=1.7" src="io.js"/>
+	<script type="application/javascript;version=1.7" src="move.js"/>
+	<script type="application/javascript;version=1.7" src="layout.js"/>
+	<script type="application/javascript;version=1.7" src="edit.js"/>
+	<script type="application/javascript;version=1.7" src="xulgear.js"/>
 
 	<keyset>
 		<key id="save" modifiers="accel" key="S" oncommand="saveXULFile()" />

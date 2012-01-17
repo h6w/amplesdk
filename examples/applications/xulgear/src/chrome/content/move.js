@@ -20,8 +20,15 @@ function copyElements() {
 function copyElement(treeitem) {
 	if (treeitem.target.nodeType == 1) {
 		var treeitems = treeitem.lastChild.childNodes;//getChildTreeitems(treeitem);
-		var childs = [copyElement(i) for each(i in treeitems) if(i.tagName=='treeitem')]
-		var attributes = [{name: i, value:treeitem.target.attrs[i]} for (i in treeitem.target.attrs)];
+    	// var childs = [copyElement(i) for each(i in treeitems) if(i.tagName=='treeitem')]
+		var childs = [];
+        for (i in treeitems) if(i.tagName=='treeitem') childs.push(copyElement(i));
+		// var attributes = [{name: i, value:treeitem.target.attrs[i]} for (i in treeitem.target.attrs)];
+		var attributes = {};
+        for (i in treeitem.target.attrs) {
+            var obj = {name: i, value:treeitem.target.attrs[i]};
+            attributes.push(obj);
+        }
 		var obj = {type:1, name: treeitem.target.tagName, children:childs, attributes: attributes, "styles": copyObject(treeitem.target.styles)};
 	} else if (treeitem.target.nodeType == 3) {
 		var obj = {type:3, data:treeitem.target.data};

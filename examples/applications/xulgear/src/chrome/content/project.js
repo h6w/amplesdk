@@ -23,7 +23,7 @@ SerializableObject.prototype.deserialize = function(serializedObject) {
 function Project(json) {
 	this.directory = "";
 	this.name = "";
-	this.fileTreeRdf = <root>jpieowiofw</root>;
+	this.fileTreeRdf = '<root>jpieowiofw</root>';
 }
 
 Project.prototype = new SerializableObject();
