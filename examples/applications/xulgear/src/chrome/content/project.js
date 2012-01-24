@@ -53,7 +53,7 @@ HTML5Project.prototype.onDeserialized = function (json) { }
 var so = new FirefoxExtensionProject();
 so.deserialize({name:"XULPIX", directory:"C:\\", b:{c:32}});
 
-alert(JSON.stringifyAll(so));
+//alert(JSON.stringifyAll(so)); //Firefox says "JSON.stringifyAll is not a function"
 
 
 //XULRunnerProject
