@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Ample Keyboard Demo</title>
+		<script type="text/javascript" src="../../../ample/runtime.js"></script>
+		<script type="text/javascript" src="../../../ample/languages/xhtml/xhtml.js"></script>
+		<script type="text/javascript" src="../../../ample/languages/xul/xul.js"></script>
+		<link type="text/ample+css" href="../../../ample/languages/xul/themes/default/style.css" rel="stylesheet"/>
+
+		<style type="text/css">
+			html, body {
+				width:	100%;
+				height: 100%;
+				padding:0;
+				margin:	0;
+				overflow:hidden;
+			}
+			body {
+				border: 0;
+				font-family: Arial;
+				font-size: 13px;
+			}
+		</style>
+
+	</head>
+	<body bgcolor="silver">
+        <script type="application/ample+xml">
+        <xul:keyset>
+            
+        </xul:keyset>
+        <xul:hbox xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:aml="http://www.amplesdk.com/ns/aml" flex="1">
+            <xul:vbox flex="2">
+            <!-- Keyboard -->
+                <!-- Line 0: F1-F12 <PrtSc> <Pause> <Insert> <Del> -->
+                <xul:hbox flex="1">
+                    <xul:button flex="1" id="F1" label="F1" />
+                    <xul:button flex="1" id="F2" label="F2" />
+                    <xul:button flex="1" id="F3" label="F3" />
+                    <xul:button flex="1" id="F4" label="F4" />
+                    <xul:button flex="1" id="F5" label="F5" />
+                    <xul:button flex="1" id="F6" label="F6" />
+                    <xul:button flex="1" id="F7" label="F7" />
+                    <xul:button flex="1" id="F8" label="F8" />
+                    <xul:button flex="1" id="F9" label="F9" />
+                    <xul:button flex="1" id="F10" label="F10" />
+                    <xul:button flex="1" id="F11" label="F11" />
+                    <xul:button flex="1" id="F12" label="F12" />
+                    <xul:button flex="1" id="PrtSc" label="PrtSc" />
+                    <xul:button flex="1" id="Ins" label="Ins" />
+                    <xul:button flex="1" id="Del" label="Del" />
+                </xul:hbox>
+                <!-- Line 1: `1234567890-=<bs> -->
+                <xul:hbox flex="1">
+                    <xul:button flex="1" id="`" label="`" />
+                    <xul:button flex="1" id="1" label="1" />
+                    <xul:button flex="1" id="2" label="2" />
+                    <xul:button flex="1" id="3" label="3" />
+                    <xul:button flex="1" id="4" label="4" />
+                    <xul:button flex="1" id="5" label="5" />
+                    <xul:button flex="1" id="6" label="6" />
+                    <xul:button flex="1" id="7" label="7" />
+                    <xul:button flex="1" id="8" label="8" />
+                    <xul:button flex="1" id="9" label="9" />
+                    <xul:button flex="1" id="0" label="0" />
+                    <xul:button flex="1" id="-" label="-" />
+                    <xul:button flex="1" id="=" label="=" />
+                    <xul:button flex="1" id="BKSP" label="BKSP" />
+                </xul:hbox>
+                <!-- Line 2: <tab>QWERTYUIOOP[] -->            
+                <xul:hbox flex="1">
+                    <xul:button flex="1" id="TAB" label="TAB" />
+                    <xul:button flex="1" id="Q" label="Q" />
+                    <xul:button flex="1" id="W" label="W" />
+                    <xul:button flex="1" id="E" label="E" />
+                    <xul:button flex="1" id="R" label="R" />
+                    <xul:button flex="1" id="T" label="T" />
+                    <xul:button flex="1" id="Y" label="Y" />
+                    <xul:button flex="1" id="U" label="U" />
+                    <xul:button flex="1" id="I" label="I" />
+                    <xul:button flex="1" id="O" label="O" />
+                    <xul:button flex="1" id="P" label="P" />
+                    <xul:button flex="1" id="[" label="[" />
+                    <xul:button flex="1" id="]" label="]" />
+                </xul:hbox>
+                <!-- Line 3: <caps>ASDFGHJKL;'\<enter> -->            
+                <xul:hbox flex="1">
+                    <xul:button flex="1" id="CAPS" label="CAPS" />
+                    <xul:button flex="1" id="A" label="A" />
+                    <xul:button flex="1" id="S" label="S" />
+                    <xul:button flex="1" id="D" label="D" />
+                    <xul:button flex="1" id="F" label="F" />
+                    <xul:button flex="1" id="G" label="G" />
+                    <xul:button flex="1" id="H" label="H" />
+                    <xul:button flex="1" id="J" label="J" />
+                    <xul:button flex="1" id="K" label="K" />
+                    <xul:button flex="1" id="L" label="L" />
+                    <xul:button flex="1" id=";" label=";" />
+                    <xul:button flex="1" id="&apos;" label="&apos;" />
+                    <xul:button flex="1" id="\" label="\" />
+                    <xul:button flex="1" id="ENTER" label="ENTER" />
+                </xul:hbox>
+                <!-- Line 4: <shift>ZXCVBNM,./<shift> -->
+                <xul:hbox flex="1">
+                    <xul:button flex="1" id="SHIFT" label="SHIFT" />
+                    <xul:button flex="1" id="\" label="\" />
+                    <xul:button flex="1" id="Z" label="Z" />
+                    <xul:button flex="1" id="X" label="X" />
+                    <xul:button flex="1" id="C" label="C" />
+                    <xul:button flex="1" id="V" label="V" />
+                    <xul:button flex="1" id="B" label="B" />
+                    <xul:button flex="1" id="N" label="N" />
+                    <xul:button flex="1" id="M" label="M" />
+                    <xul:button flex="1" id="," label="," />
+                    <xul:button flex="1" id="." label="." />
+                    <xul:button flex="1" id="/" label="/" />
+                    <xul:button flex="1" id="SHIFT" label="SHIFT" />
+                </xul:hbox>
+                <!-- Line 5: <ctrl> <meta> <alt> <space> <alt> <meta2> <ctrl> <arrows> -->
+                <xul:hbox flex="1">
+                    <xul:button flex="1" id="CTRL" label="CTRL" />
+                    <xul:button flex="1" id="META" label="META" />
+                    <xul:button flex="1" id="ALT" label="ALT" />
+                    <xul:button flex="1" id="SPACE" label="SPACE" />
+                    <xul:button flex="1" id="ALT" label="ALT" />
+                    <xul:button flex="1" id="META2" label="META2" />
+                    <xul:button flex="1" id="CTRL" label="CTRL" />
+                    <xul:button flex="1" id="LEFT" label="LEFT" />
+                    <xul:button flex="1" id="^" label="^" />
+                    <xul:button flex="1" id="v" label="v" />
+                    <xul:button flex="1" id="RIGHT" label="RIGHT" />
+                </xul:hbox>
+            </xul:vbox>
+            <xul:vbox flex="1">
+            <!-- Console -->
+                <xul:scrollbox id="keylog">
+                    <xul:label>All key operations will be logged here.</xul:label>
+                </xul:scrollbox>         
+            </xul:vbox>
+        </xul:hbox>
+        </script>
+	</body>
+</html>
