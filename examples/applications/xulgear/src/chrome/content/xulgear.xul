@@ -39,20 +39,20 @@
     <!ENTITY delete "Delete">
     <!ENTITY export "Export xul">
 ]>
-<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-<?xml-stylesheet href="chrome://xulgear/skin/skin.css" type="text/css"?>
+<!-- <?xml-stylesheet href="chrome://global/skin/" type="text/css"?> -->
+<!-- <?xml-stylesheet href="chrome://xulgear/skin/skin.css" type="text/css"?> -->
 
 <!--<?xul-overlay href="styles.xul"?>-->
 <window persist="width height" id="root-window" onmouseup="var e = window.document.getElementById('element-tree');if(e.ondrag){e.ondrag=false}" width="1024" height="768" title="XUL Gear" onload="initWindow(event)" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" orient="horizontal">
 
-	<script type="application/javascript;version=1.7" src="json2.js"/>
-	<script type="application/javascript;version=1.7" src="project.js"/>
-	<script type="application/javascript;version=1.7" src="xulgear_data.js"/>
-	<script type="application/javascript;version=1.7" src="io.js"/>
-	<script type="application/javascript;version=1.7" src="move.js"/>
-	<script type="application/javascript;version=1.7" src="layout.js"/>
-	<script type="application/javascript;version=1.7" src="edit.js"/>
-	<script type="application/javascript;version=1.7" src="xulgear.js"/>
+	<script type="application/javascript" src="json2.js"/>
+	<script type="application/javascript" src="project.js"/>
+	<script type="application/javascript" src="xulgear_data.js"/>
+	<script type="application/javascript" src="io.js"/>
+	<script type="application/javascript" src="move.js"/>
+	<script type="application/javascript" src="layout.js"/>
+	<script type="application/javascript" src="edit.js"/>
+	<script type="application/javascript" src="xulgear.js"/>
 
 	<keyset>
 		<key id="save" modifiers="accel" key="S" oncommand="saveXULFile()" />
@@ -151,24 +151,25 @@
 					<splitter/>
 					<treecol id="lastname"  type="text" editable="true" label="id" flex="1"/>
 				</treecols>
+                <treebody>
+				    <treechildren>
+					    <treeitem id="global-skin-treeitem">
+						    <treerow>							
+							    <treecell label="#xml-stylesheet" editable="false" />
+							    <treecell id="globalcss-treecell" editable="false"/>
+						    </treerow>
+					    </treeitem>
+					    <treeitem  id="window-treeitem"><!-- container="true" open="true">-->
+						    <treerow>							
+							    <treecell label="window" editable="false" />
+							    <treecell id="window-treecell" editable="true"/>
+						    </treerow>
+						    <treechildren id="window-children">
 
-				<treechildren>
-					<treeitem id="global-skin-treeitem">
-						<treerow>							
-							<treecell label="#xml-stylesheet" editable="false" />
-							<treecell id="globalcss-treecell" editable="false"/>
-						</treerow>
-					</treeitem>
-					<treeitem  id="window-treeitem"><!-- container="true" open="true">-->
-						<treerow>							
-							<treecell label="window" editable="false" />
-							<treecell id="window-treecell" editable="true"/>
-						</treerow>
-						<treechildren id="window-children">
-
-						</treechildren>
-					</treeitem>
-				</treechildren>
+						    </treechildren>
+					    </treeitem>
+				    </treechildren>
+                </treebody>
 			</tree>
 
 
@@ -250,7 +251,6 @@
 	</vbox>
 		<vbox id="option">
 			<groupbox label="&style;">
-				<caption label="&style;"/>
 				<grid>
 					<columns>
 						<column/>

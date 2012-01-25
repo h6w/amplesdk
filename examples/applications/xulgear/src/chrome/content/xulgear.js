@@ -1,4 +1,4 @@
-const MAXOFRADIOs = 2;
+//const MAXOFRADIOs = 2; //Already declared
 var attributesBoxList = new Object();
 //var eventsBoxList = new Object();
 
@@ -709,10 +709,11 @@ function removeStyle(label ,name) {
 var focusedElement = null; //dummy object which has a setAttribute function
 var preRow = 0;
 var preStyle = {};
-const lightStyle = {color:"green", borderTopStyle:"solid", borderTopWidth:"1px", borderTopColor:"green"
-		, borderLeftStyle:"solid", borderLeftWidth:"1px", borderLeftColor:"green"
-		, borderRightStyle:"solid", borderRightWidth:"1px", borderRightColor:"green"
-		, borderBottomStyle:"solid", borderBottomWidth:"1px", borderBottomColor:"green"}
+////lightStyle already declared.
+//const lightStyle = {color:"green", borderTopStyle:"solid", borderTopWidth:"1px", borderTopColor:"green"
+//		, borderLeftStyle:"solid", borderLeftWidth:"1px", borderLeftColor:"green"
+//		, borderRightStyle:"solid", borderRightWidth:"1px", borderRightColor:"green"
+//		, borderBottomStyle:"solid", borderBottomWidth:"1px", borderBottomColor:"green"}
 function lightup(event){
 	var row = {}, obj = {};
 	var tree = this.document.getElementById("element-tree");
@@ -783,3 +784,6 @@ function assert(cond) {
 	}
 }
 */
+ample.ready(function() {
+                initWindow();
+            });
