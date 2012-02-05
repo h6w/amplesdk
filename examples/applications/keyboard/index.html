@@ -138,10 +138,11 @@
 	</head>
 	<body bgcolor="silver">
         <script type="application/ample+xml">
-        <xul:commandset xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:aml="http://www.amplesdk.com/ns/aml">
+        <xul:page  xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:aml="http://www.amplesdk.com/ns/aml">
+        <xul:commandset>
             <xul:command id="buttonpressed" oncommand="printKey();" />
         </xul:commandset>
-        <xul:keyset xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:aml="http://www.amplesdk.com/ns/aml" oncommand="press(event.target.getAttribute('key'));">
+        <xul:keyset oncommand="press(event.target.getAttribute('key'));">
                     <xul:key key="F1" />
                     <xul:key key="F2" />
                     <xul:key key="F3" />
@@ -228,7 +229,7 @@
                     <xul:key key="v" />
                     <xul:key key="RIGHT" />
         </xul:keyset>
-        <xul:hbox xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:aml="http://www.amplesdk.com/ns/aml" flex="1">
+        <xul:hbox flex="1">
             <xul:vbox flex="2">
             <!-- Keyboard -->
                 <!-- Line 0: F1-F12 <PrtSc> <Pause> <Insert> <Del> -->
@@ -329,15 +330,14 @@
                     <xul:button flex="1" command="buttonpressed" id="RIGHT" label="RIGHT" />
                 </xul:hbox>
             </xul:vbox>
-            <xul:vbox flex="1">
+            <xul:vbox flex="1" style="overflow: auto;">
             <!-- Console -->
-                <xul:scrollbox>
-                    <xul:vbox id="keylog">
+                <xul:vbox id="keylog" style="overflow: auto;">
                     <xul:label>All key operations will be logged here.</xul:label>
-                    </xul:vbox>
-                </xul:scrollbox>         
+                </xul:vbox>
             </xul:vbox>
         </xul:hbox>
+        </xul:page>
         </script>
 	</body>
 </html>
