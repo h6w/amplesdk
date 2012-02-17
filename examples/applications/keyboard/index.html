@@ -2,10 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>Ample Keyboard Demo</title>
-		<script type="text/javascript" src="../../../ample/runtime.js"></script>
-		<script type="text/javascript" src="../../../ample/languages/xhtml/xhtml.js"></script>
-		<script type="text/javascript" src="../../../ample/languages/xul/xul.js"></script>
-		<link type="text/ample+css" href="../../../ample/languages/xul/themes/default/style.css" rel="stylesheet"/>
+		<script type="text/javascript" src="../../../../ample/runtime.js"></script>
+		<script type="text/javascript" src="../../../../ample/languages/xhtml/xhtml.js"></script>
+		<script type="text/javascript" src="../../../../ample/languages/xul/xul.js"></script>
+		<link type="text/ample+css" href="../../../../ample/languages/xul/themes/default/style.css" rel="stylesheet"/>
 
 		<style type="text/css">
 			html, body {
@@ -22,7 +22,7 @@
 			}
 		</style>
 
-        <script type="application/javascript">
+        <script type="text/javascript">
             var keymap = {
                 "U+000D":"CR",
                 "U+000E":"SO",
@@ -123,17 +123,36 @@
                 "U+007D":"}"
             };
 
-            function press(key) {
+            function fireMouseEvent(key,event) {
                 var button = ample.getElementById(keymap[key]);
-                button.doCommand();
+                var evt = ample.createEvent("MouseEvents");
+                evt.initMouseEvent(, true, true, window,
+                  0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                if (button) { 
+                    var canceled = !button.dispatchEvent(evt);
+                    if(canceled) {
+                      // A handler called preventDefault
+                      alert("Keypress unexpectedly cancelled.");
+                    }
+                }
+            }
+
+            function pressKey(key) {
+                fireMouseEvent(key,'mousedown');
+                fireMouseEvent(key,'mouseup');
             }
     
             function printKey() {
                 var str = keymap[event.keyIdentifier];
                 //alert(str);
-                var message = '<xul:label xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:xi="http://www.w3.org/2001/XInclude">'+ str + ' key pressed.</xul:label>';
+                if (str) str = str + ' key pressed.';
+                else if (event.srcElement.id) str = event.srcElement.id + ' button pressed.';
+                else if (event.keyIdentifier) str = 'Unmapped key:'+event.keyIdentifier;
+                else str = 'Unknown event.';
+                var message = '<xul:label xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:xi="http://www.w3.org/2001/XInclude">'+ str + '</xul:label>';
                 ample.query('#keylog').append(message);
             }
+
         </script>
 	</head>
 	<body bgcolor="silver">
@@ -142,7 +161,7 @@
         <xul:commandset>
             <xul:command id="buttonpressed" oncommand="printKey();" />
         </xul:commandset>
-        <xul:keyset oncommand="press(event.target.getAttribute('key'));">
+        <xul:keyset oncommand="pressKey(event.target.getAttribute('key'));">
                     <xul:key key="F1" />
                     <xul:key key="F2" />
                     <xul:key key="F3" />
