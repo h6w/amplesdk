@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2011 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -22,12 +22,12 @@ var hXULDocument_overlayFragments	= {};
 cXULDocument.prototype.loadOverlay	= function(sUrl, fObserver) {
 	var oDocument	= this;
 	ample.ajax({
-			"url": 		sUrl,
+			"url":		sUrl,
 			"async":	true,
 			"dataType":	"xml",
 			"success":	function(oResponse) {
 				// oOverlay	= ample.importNode(oResponse.documentElement, true);
-				oOverlayDocumentElement = oResponse.documentElement; // We can't import the overlay document
+				oOverlayDocumentElement	= oResponse.documentElement; // We can't import the overlay document
 									// because we still need to differentiate
 									// between the ample Document and the Overlay
 									// Document.
@@ -39,10 +39,6 @@ cXULDocument.prototype.loadOverlay	= function(sUrl, fObserver) {
 					fObserver();
 			}
 	});
-};
-
-cXULDocument.prototype.applyOverlay	= function(oOverlayDocumentElement) {
-	fXULElement_overlay_applyOverlays(this.documentElement, oOverlayDocumentElement);
 };
 
 /*

@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2009 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -51,6 +51,7 @@ fExporter_export(cTextEvent,		"TextEvent");
 fExporter_export(cKeyboardEvent,	"KeyboardEvent");
 fExporter_export(cMouseEvent,		"MouseEvent");
 fExporter_export(cWheelEvent,		"WheelEvent");
+fExporter_export(cFocusEvent,		"FocusEvent");
 fExporter_export(cMutationEvent,	"MutationEvent");
 // Touch/Gesture
 fExporter_export(cGestureEvent,		"GestureEvent");
@@ -66,10 +67,10 @@ fExporter_export(cComment,			"Comment");
 fExporter_export(cDOMConfiguration,	"DOMConfiguration");
 fExporter_export(cDocument,			"Document");
 fExporter_export(cDocumentFragment,	"DocumentFragment");
-fExporter_export(cElement, 			"Element");
+fExporter_export(cElement,			"Element");
 fExporter_export(cEntityReference,	"EntityReference");
 fExporter_export(cDOMException,		"DOMException");
-fExporter_export(cDOMError, 		"DOMError");
+fExporter_export(cDOMError,			"DOMError");
 fExporter_export(cDOMImplementation,"DOMImplementation");
 fExporter_export(cNodeList,			"NodeList");
 fExporter_export(cProcessingInstruction,	"ProcessingInstruction");
@@ -108,4 +109,4 @@ fExporter_sign(oAmple.locale,	"locale");
 fExporter_sign(cNodeSelector.pseudoClass,	"pseudoClass");
 fExporter_sign(oAmple_root.$getContainer,	"$getContainer");
 //
-fExporter_export(oAmple,	"ample", window);
+window["ample"]	= oAmple;
