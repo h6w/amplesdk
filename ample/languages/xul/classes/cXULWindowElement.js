@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2009 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -17,6 +17,13 @@ cXULWindowElement.prototype.$draggable	= true;
 cXULWindowElement.prototype.$resizable	= true;
 
 cXULWindowElement.modalWindow	= null;
+
+cXULWindowElement.prototype.$mapAttribute	= function(sName, sValue) {
+	if (sName == "title")
+		this.$getContainer("title").innerHTML	= sValue || '';
+	else
+		cXULElement.prototype.$mapAttribute.call(this, sName, sValue);
+};
 
 cXULWindowElement.prototype.show	= function (nLeft, nTop) {
 	var that	= this,
@@ -78,25 +85,23 @@ cXULWindowElement.prototype.show	= function (nLeft, nTop) {
 		"ease-in",
 		function() {
 			// Show head and body
-			if (that.getAttribute("hidechrome") != "true") {
-				oHead.style.removeProperty('display');
-				
-			}
+			if (that.getAttribute("hidechrome") != "true")
+				oHead.style.display	= "";
 			if (bHeader)
-				oHeader.style.removeProperty('display');
+				oHeader.style.display	= "";
 			if (oFooter)
-				oFooter.style.removeProperty('display');
-			oBody.style.removeProperty('display');
+				oFooter.style.display	= "";
+			oBody.style.display	= "";
 			// Restore opacity
 			ample.query(that).css("opacity", null);
 			// Restore sizes if not specified as attributes
 			if (!that.getAttribute("width"))
-				oContainer.style.width = "";
+				oContainer.style.width	= '';
 			if (!that.getAttribute("height"))
-				oContainer.style.height = "";
+				oContainer.style.height	= '';
 			//
-			oContainer.style.minWidth = "";
-			oContainer.style.minHeight = "";
+			oContainer.style.minWidth	= "";
+			oContainer.style.minHeight	= "";
 			// Reflow
 			oXULReflowManager.schedule(that);
 
@@ -106,7 +111,7 @@ cXULWindowElement.prototype.show	= function (nLeft, nTop) {
 				if (that.getAttribute("buttons").split(/\s*,\s*/).indexOf(sButtonFocus) != -1)
 					that.buttons[sButtonFocus].focus();
 			//
-			var oEvent  = that.ownerDocument.createEvent("CustomEvent");
+			var oEvent	= that.ownerDocument.createEvent("CustomEvent");
 			oEvent.initCustomEvent("windowshown", true, false, null);
 			that.dispatchEvent(oEvent);
 		}
@@ -122,7 +127,7 @@ cXULWindowElement.prototype.showModal	= function (nTop, nLeft) {
 	this.show(nTop, nLeft);
 };
 
-cXULWindowElement.prototype.hide = function() {
+cXULWindowElement.prototype.hide	= function() {
 	var that	= this,
 		oContainer	= that.$getContainer(),
 		oHead	= that.$getContainer("head"),
@@ -172,17 +177,17 @@ cXULWindowElement.prototype.hide = function() {
 
 			// show head and body
 			if (that.getAttribute("hidechrome") != "true")
-				oHead.style.removeProperty('display');
+				oHead.style.display	= "";
 			if (bHeader)
-				oHeader.style.removeProperty('display');
+				oHeader.style.display	= "";
 			if (oFooter)
-				oFooter.style.removeProperty('display');
-			oBody.style.removeProperty('display');
+				oFooter.style.display	= "";
+			oBody.style.display	= "";
 			//
-			oContainer.style.minWidth = "";
-			oContainer.style.minHeight = "";
+			oContainer.style.minWidth	= "";
+			oContainer.style.minHeight	= "";
 			//
-			var oEvent  = that.ownerDocument.createEvent("CustomEvent");
+			var oEvent	= that.ownerDocument.createEvent("CustomEvent");
 			oEvent.initCustomEvent("windowhidden", true, false, null);
 			that.dispatchEvent(oEvent);
 		}
@@ -203,7 +208,7 @@ cXULWindowElement.oncapture	= function(oEvent) {
 
 cXULWindowElement.onkeydown	= function(oEvent) {
 	if (oEvent.target == oEvent.currentTarget)
-		if (oEvent.keyIdentifier == "Esc")
+		if (oEvent.keyIdentifier == "U+001B")	// Esc
 			oEvent.target.hide();
 };
 

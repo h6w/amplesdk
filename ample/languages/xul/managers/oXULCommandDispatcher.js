@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2009 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -17,11 +17,11 @@ cXULElement.prototype.doCommand		= function() {
 			oCommand	= null;
 	}
 
-    // Fire Event on command element
+	// Fire Event on command element
 	if (oCommand) {
-	    var oEvent = this.ownerDocument.createEvent("CustomEvent");
-	    oEvent.initCustomEvent("command", true, true, null);
-	    oCommand.dispatchEvent(oEvent);
+		var oEvent	= this.ownerDocument.createEvent("CustomEvent");
+		oEvent.initCustomEvent("command", true, true, null);
+		oCommand.dispatchEvent(oEvent);
 	}
 };
 
@@ -31,11 +31,6 @@ var oXULCommandDispatcher	= (function () {
 		if (oEvent.target instanceof cXULElement) {
 			var oElement, sName, sValue;
 			if ((sValue = oEvent.target.attributes["command"]) && (oElement = this.getElementById(sValue)) && oElement instanceof cXULElement_command)
-				for (sName in oElement.attributes)
-					if (oElement.attributes.hasOwnProperty(sName))
-						if (sName != "id" && sName != "persist")
-							oEvent.target.setAttribute(sName, oElement.attributes[sName]);
-			if ((sValue = oEvent.target.attributes["observes"]) && (oElement = this.getElementById(sValue)) && oElement instanceof cXULElement_broadcaster)
 				for (sName in oElement.attributes)
 					if (oElement.attributes.hasOwnProperty(sName))
 						if (sName != "id" && sName != "persist")

@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2009 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -50,7 +50,7 @@ function fQuery_history_onHashChange() {
 			if (sQuery_history_new != sHash) {
 				var oEvent	= new cHashChangeEvent;
 				oEvent.initHashChangeEvent("hashchange", true, false, sUrl + (sQuery_history_prev ? '#' : '') + sQuery_history_prev, sUrl + (sHash ? '#' : '') + sHash);
-				fNode_dispatchEvent(oAmple_document, oEvent);
+				fEventTarget_dispatchEvent(oAmple_document, oEvent);
 			}
 			//
 			sQuery_history_prev	= sHash;
