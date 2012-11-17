@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2009 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -21,7 +21,7 @@ if (!cXSLTProcessor) {
 
 		var oStylesheet	= new cActiveXObject("MSXML2" + '.' + "FreeThreadedDOMDocument");
 //		oStylesheet.resolveExternals	= true;
-		oStylesheet.loadXML(oNode.xml);
+		oStylesheet.loadXML(new cXMLSerializer().serializeToString(oNode));
 		oStylesheet.setProperty("SelectionNamespaces", "xmlns" + ':' + "xsl" + '="' + sNS_XSLT + '"');
 		var oMethod	= oStylesheet.selectSingleNode('/' + '/' + "xsl" + ':' + "output");
 
@@ -48,7 +48,7 @@ if (!cXSLTProcessor) {
 //<-Guard
 
 		if (sNameSpaceURI == null)
-			sNameSpaceURI	=  '';
+			sNameSpaceURI	=	'';
 		var oNameSpace	= this._parameters[sNameSpaceURI];
 		if (oNameSpace && oNameSpace[sLocalName])
 			return oNameSpace[sLocalName];
@@ -63,7 +63,7 @@ if (!cXSLTProcessor) {
 //<-Guard
 
 		if (sNameSpaceURI == null)
-			sNameSpaceURI	=  '';
+			sNameSpaceURI	=	'';
 		if (sNameSpaceURI)
 			this._processor.addParameter(sLocalName, '', sNameSpaceURI);
 		else
@@ -82,7 +82,7 @@ if (!cXSLTProcessor) {
 //<-Guard
 
 		if (sNameSpaceURI == null)
-			sNameSpaceURI	=  '';
+			sNameSpaceURI	=	'';
 		if (sNameSpaceURI)
 			this._processor.addParameter(sLocalName, sValue, sNameSpaceURI);
 		else

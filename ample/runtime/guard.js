@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2010 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -34,7 +34,7 @@ function fGuard(aArguments, aParameters, oObject) {
 //<-Debug
 
 	// Check constructor
-	if (oObject && fCaller && oObject instanceof fCaller)
+	if (oObject && fCaller && fCaller != fEval && oObject instanceof fCaller)
 		throw new cAmpleException(cAmpleException.CANNOT_ACCESS_DOM_ERR, fCaller);
 
 	// Iterate over parameters list
@@ -72,18 +72,24 @@ function fGuard(aArguments, aParameters, oObject) {
 		}
 	}
 };
-//<-Guard
 
+var rGuard_object	= /object\s([^\s]+)\]/;
 function fGuard_instanceOf(vValue, cType) {
-	var sType	= typeof vValue;
+	var sType	= cObject.prototype.toString.call(vValue).match(rGuard_object)[1];
 	switch (cType) {
 		// Primitive types
 		case cString:
-			return sType == "string" || vValue instanceof cType;
+			return sType == "String";
 		case cBoolean:
-			return sType == "boolean" || vValue instanceof cType;
+			return sType == "Boolean";
 		case cNumber:
-			return(sType == "number" || vValue instanceof cType) &&!fIsNaN(vValue);
+			return sType == "Number" &&!fIsNaN(vValue);
+		case cArray:
+			return sType == "Array";
+		case cFunction:
+			return sType == "Function";
+		case cRegExp:
+			return sType == "RegExp";
 		// Virtual types
 		case cXMLNode:
 			return vValue &&!fIsNaN(vValue.nodeType);
@@ -93,12 +99,14 @@ function fGuard_instanceOf(vValue, cType) {
 			return vValue && vValue.nodeType == 9;
 		// Special type Arguments (pseudo type for JavaScript arguments object)
 		case cArguments:
-			return sType == "object" && "callee" in vValue;
-		// Object and Complex types
+			return typeof vValue == "object" && "callee" in vValue;
+		// Object and other types
 		default:
 			return cType == cObject ? true : vValue instanceof cType;
 	}
 };
+//<-Guard
+
 /*
 function fGuard_typeof(vValue) {
 	if (typeof vValue == "string" || vValue instanceof cString)

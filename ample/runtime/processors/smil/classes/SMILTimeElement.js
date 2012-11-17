@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2009 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -234,7 +234,7 @@ function fSMILTimeElement_beginElement(oElement) {
 	// Dispatch end event
 	var oEvent	= new cSMILTimeEvent;
 	oEvent.initTimeEvent("begin", window, null);
-	fNode_dispatchEvent(oElement, oEvent);
+	fEventTarget_dispatchEvent(oElement, oEvent);
 };
 
 function fSMILTimeElement_endElement(oElement) {
@@ -268,7 +268,7 @@ function fSMILTimeElement_endElement(oElement) {
 	// Dispatch end event
 	var oEvent	= new cSMILTimeEvent;
 	oEvent.initTimeEvent("end", window, null);
-	fNode_dispatchEvent(oElement, oEvent);
+	fEventTarget_dispatchEvent(oElement, oEvent);
 };
 
 //Utilities

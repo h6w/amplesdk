@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2010 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -10,7 +10,7 @@
 // Events
 var aQuery_protectedEvents	= [
 	// UIEvent
-	,"focus", "blur"
+	"focus", "blur"
 	,"DOMFocusIn", "DOMFocusOut", "DOMActivate"
 	,"capture", "losecapture"
 	,"modal"
@@ -80,7 +80,7 @@ cQuery.prototype.bind	= function(sType, fHandler, bCapture) {
 	return this;
 };
 
-cQuery.prototype.unbind	= function(sType, fHandler, bCaprure) {
+cQuery.prototype.unbind	= function(sType, fHandler, bCapture) {
 //->Guard
 	fGuard(arguments, [
 		["type",	cString],
@@ -124,7 +124,7 @@ oAmple.unbind	= function(sType, fHandler, bCapture) {
 function fQuery_trigger(oNode, sType, oDetail) {
 	var oEvent	= new cCustomEvent;
 	oEvent.initCustomEvent(sType, true, true, oDetail);
-	fNode_dispatchEvent(oNode, oEvent);
+	fEventTarget_dispatchEvent(oNode, oEvent);
 };
 
 oAmple.trigger	= function(sType, oDetail) {

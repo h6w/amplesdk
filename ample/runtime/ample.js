@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2010 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -12,7 +12,7 @@ var hClasses	= {};
 // Create Ample SDK document object
 var oAmple_document	= fDOMImplementation_createDocument(new cDOMImplementation, sNS_XHTML, "body", null),
 	oAmple_root		= oAmple_document.documentElement;
-oAmple_root.$getContainer	= function(sName) {return sName == "gateway" ? oBrowser_body : sName ? null : oBrowser_root};
+oAmple_root.$getContainer	= function(sName) {return sName == "gateway" ? oBrowser_body : sName ? null : oBrowser_root;};
 
 //
 function fQuery(vArgument1, vArgument2, vArgument3) {
@@ -84,6 +84,12 @@ function fQuery(vArgument1, vArgument2, vArgument3) {
 		if (vArgument1 instanceof cElement)
 			oQuery[oQuery.length++]	= vArgument1;
 		else
+		if (vArgument1 instanceof cNodeList)
+			fQuery_each(vArgument1, function() {
+				if (this.nodeType == 1)
+					oQuery[oQuery.length++]	= this;
+			});
+		else
 		if (vArgument1 instanceof cQuery)
 			fQuery_each(vArgument1, function() {
 				oQuery[oQuery.length++]	= this;
@@ -145,6 +151,7 @@ function fAmple_extend(oTarget, oSource) {
 	//<-Debug
 			);
 //<-Guard
+		return oAmple;
 	}
 	else {
 		if (!oSource) {
@@ -154,7 +161,7 @@ function fAmple_extend(oTarget, oSource) {
 
 		//
 		for (var sName in oSource)
-			if (sName != "toString") {
+			if (sName != "toString" && sName != "prototype") {
 //->Debug
 				if (oTarget.hasOwnProperty(sName))
 					fUtilities_warn(sGUARD_REWRITING_MEMBER_WRN, [sName]);
@@ -191,7 +198,7 @@ oAmple.ready	= function(fHandler) {
 	]);
 //<-Guard
 
-	oAmple_document.addEventListener("load", fHandler, false);
+	fEventTarget_addEventListener(oAmple_document, "load", fHandler, false);
 };
 
 oAmple.guard	= function(aArguments, aParameters) {
@@ -236,7 +243,7 @@ oAmple.config	= function(sName, oValue) {
 			if (oOldValue != oValue) {
 				var oEvent	= new cCustomEvent;
 				oEvent.initCustomEvent("configchange", false, false, sName);
-				fNode_dispatchEvent(oAmple_document, oEvent);
+				fEventTarget_dispatchEvent(oAmple_document, oEvent);
 			}
 		}
 //->Debug
@@ -280,10 +287,10 @@ if (!oPrefixes[''])
 	oPrefixes['']		= sNS_XHTML;
 if (!oPrefixes["aml"])
 	oPrefixes["aml"]	= sNS_AML;
-if (!oPrefixes["ev"])
-	oPrefixes["ev"]		= sNS_XEVENTS;
-if (!oPrefixes["xi"])
-	oPrefixes["xi"]		= sNS_XINCLUDE;
+if (!oPrefixes['ev'])
+	oPrefixes['ev']		= sNS_XEVENTS;
+if (!oPrefixes['xi'])
+	oPrefixes['xi']		= sNS_XINCLUDE;
 if (!oPrefixes["smil"])
 	oPrefixes["smil"]	= sNS_SMIL;
 if (!oPrefixes["xlink"])
@@ -322,14 +329,32 @@ oAmple.close	= function() {
 
 //
 function fAmple_instance(oDocument, oNode) {
-    for (var oElement, sId; oNode; oNode = oNode.parentNode)
-        if ((sId = oNode.id) && (oElement = (oDocument_ids[sId] || oDocument_all[sId])))
-            return oElement;
-    return null;
+	for (var oElement, sId; oNode; oNode = oNode.parentNode)
+		if ((sId = oNode.id) && (oElement = (oDocument_ids[sId] || oDocument_all[sId])))
+			return oElement;
+	return null;
 };
 
 oAmple.$instance	= function(oNode) {
 	return fAmple_instance(oAmple_document, oNode);
+};
+
+oAmple.$encodeXMLCharacters	= function(sValue) {
+//->Guard
+	fGuard(arguments, [
+		["value",	cString]
+	]);
+//<-Guard
+	return fUtilities_encodeXMLCharacters(sValue);
+};
+
+oAmple.$decodeXMLCharacters	= function(sValue) {
+//->Guard
+	fGuard(arguments, [
+		["value",	cString]
+	]);
+//<-Guard
+	return fUtilities_decodeXMLCharacters(sValue);
 };
 
 /*
@@ -341,7 +366,21 @@ oAmple.$class	= function(oNode) {
 
 //
 oAmple.resolveUri	= function(sUri, sBaseUri) {
+//->Guard
+	fGuard(arguments, [
+		["uri",		cString],
+		["baseURI",	cString]
+	]);
+//<-Guard
 	return fUtilities_resolveUri(sUri, sBaseUri);
+};
+
+// Special hook to init runtime when Ample SDK was loaded lazily
+oAmple.$init	= function() {
+	if (oAmple.readyState == "loading") {
+		fBrowser_initialize();
+		fAmple_initialize();
+	}
 };
 
 // set standard parameters
@@ -349,13 +388,13 @@ var oConfiguration	= oAmple_document.domConfig;
 fDOMConfiguration_setParameter(oConfiguration, "error-handler", null);
 fDOMConfiguration_setParameter(oConfiguration, "element-content-whitespace", false);	// in DOM-Core spec the default value is true
 fDOMConfiguration_setParameter(oConfiguration, "entities", false);	// in DOM-Core spec the default value is true
-fDOMConfiguration_setParameter(oConfiguration, "comments", false); 	// in DOM-Core spec the default value is true
+fDOMConfiguration_setParameter(oConfiguration, "comments", false);	// in DOM-Core spec the default value is true
 // set ample parameters
 fDOMConfiguration_setParameter(oConfiguration, "ample-module-history-fix", false);	// -> ample-history
-fDOMConfiguration_setParameter(oConfiguration, "ample-version", '@project.version@');
-fDOMConfiguration_setParameter(oConfiguration, "ample-locale", "en");
+fDOMConfiguration_setParameter(oConfiguration, "ample-version", '@project_version@');
+fDOMConfiguration_setParameter(oConfiguration, "ample-locale", 'en');
 fDOMConfiguration_setParameter(oConfiguration, "ample-user-locale", oUANavigator.language || oUANavigator.userLanguage || 'en-US');
-fDOMConfiguration_setParameter(oConfiguration, "ample-user-agent", '@project.userAgent@');
+fDOMConfiguration_setParameter(oConfiguration, "ample-user-agent", '@project_userAgent@');
 fDOMConfiguration_setParameter(oConfiguration, "ample-enable-style", true);
 fDOMConfiguration_setParameter(oConfiguration, "ample-enable-guard", true);
 fDOMConfiguration_setParameter(oConfiguration, "ample-enable-transitions", true);

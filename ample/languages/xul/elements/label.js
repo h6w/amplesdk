@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2009 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -40,7 +40,7 @@ cXULElement_label.handlers	= {
 
 // Element Render: open
 cXULElement_label.prototype.$getTagOpen	= function() {
-    return '<label class="xul-label' +(this.attributes["class"] ? " " + this.attributes["class"] : "") + (!this.$isAccessible() ? " xul-label_disabled" : "") + '"' + (this.hasAttribute("style") ? ' style="' + this.getAttribute("style") + '"' : '')+ '>' +(this.attributes["value"] ? this.attributes["value"] : '');
+    return '<label class="xul-label' +(this.attributes["class"] ? " " + this.attributes["class"] : "")+ '">' +(this.attributes["value"] ? this.attributes["value"] : '');
 };
 
 // Element Render: close

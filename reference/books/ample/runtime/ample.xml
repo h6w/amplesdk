@@ -16,6 +16,7 @@
 				<li><link type="class">Query</link> <link type="object">ample</link>.query(String <em>xml</em>)</li>
 				<li><link type="class">Query</link> <link type="object">ample</link>.query(<link type="class">Query</link> <em>collection</em>)</li>
 				<li><link type="class">Query</link> <link type="object">ample</link>.query(<link type="class">Element</link> <em>element</em>)</li>
+				<li><link type="class">Query</link> <link type="object">ample</link>.query(<link type="class">NodeList</link> <em>nodelist</em>)</li>
 			</ul>
 		</locale>
 	</abstract>
@@ -113,7 +114,16 @@
 					<argument name="element" type="Element">
 						<description>
 							<locale>
-								An Ample SDK element object.
+								An Ample SDK Element object.
+							</locale>
+						</description>
+					</argument>
+				</arguments>
+				<arguments>
+					<argument name="nodelist" type="NodeList">
+						<description>
+							<locale>
+								An Ample SDK NodeList object.
 							</locale>
 						</description>
 					</argument>
@@ -368,6 +378,15 @@
 						</description>
 					</argument>
 				</arguments>
+				<arguments>
+					<argument name="pi" type="Function">
+						<description>
+							<locale>
+								Processing instruction definition. Must have <link type="class">ProcessingInstruction</link> in its prototype chain.
+							</locale>
+						</description>
+					</argument>
+				</arguments>
 				<description>
 					<locale>
 						Core extensibility API.
@@ -437,7 +456,7 @@
 					</locale>
 				</description>
 			</method>
-			<!--  -->
+			<!-- Elements -->
 			<method name="$instance" type="Element">
 				<arguments>
 					<argument name="node" type="HTMLElement">
@@ -448,7 +467,39 @@
 				</arguments>
 				<description>
 					<locale>
-						Finds corresponding to the HTML DOM element in the Ample SDK DOM.
+						<b>UI element definition API.</b> Finds corresponding to the HTML DOM element in the Ample SDK DOM.
+					</locale>
+				</description>
+			</method>
+			<method name="$encodeXMLCharacters" type="String">
+				<arguments>
+					<argument name="value" type="String">
+						<description>
+							<locale>
+								String value to encode.
+							</locale>
+						</description>
+					</argument>
+				</arguments>
+				<description>
+					<locale>
+						Encodes XML characters, such as &amp;, &lt;, &gt;, " and ' to XML entities.
+					</locale>
+				</description>
+			</method>
+			<method name="$decodeXMLCharacters" type="String">
+				<arguments>
+					<argument name="value" type="String">
+						<description>
+							<locale>
+								String value to decode.
+							</locale>
+						</description>
+					</argument>
+				</arguments>
+				<description>
+					<locale>
+						Decodes XML entities, such as &amp;lt;, &amp;gt;, &amp;amp;, &amp;quot; and &amp;apos; to XML characters.
 					</locale>
 				</description>
 			</method>
@@ -659,6 +710,15 @@
 					</locale>
 				</description>
 			</method>
+			<!-- Hooks -->
+			<method name="$init" type="Void">
+				<description>
+					<locale>
+						Forces Ample SDK to start initialization immediately.
+						Call this method to initialize Ample SDK in case you loaded framework resources after the page load.
+					</locale>
+				</description>
+			</method>
 		</methods>
 		<events>
 			<event name="configchange" type="CustomEvent" cancelable="false" bubbles="false">
@@ -714,7 +774,7 @@
 					</locale>
 				</description>
 			</event>
-			 -->
+			-->
 		</events>
 	</members>
 </object>

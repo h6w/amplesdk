@@ -1,23 +1,23 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2009 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
  */
 
-var cAttr_resizable	= function(){};
-cAttr_resizable.prototype	= new cAMLAttr("resizable");
+var cAMLAttr_resizable	= function(){};
+cAMLAttr_resizable.prototype	= new cAMLAttr("resizable");
 
 // Class Events Handlers
-cAttr_resizable.handlers	= {};
-cAttr_resizable.handlers["DOMNodeInsertedIntoDocument"]	= function(oEvent) {
+cAMLAttr_resizable.handlers	= {};
+cAMLAttr_resizable.handlers["DOMNodeInsertedIntoDocument"]	= function(oEvent) {
 	this.ownerElement.$resizable	= this.value == "true";
 };
-cAttr_resizable.handlers["DOMNodeRemovedFromDocument"]	= function(oEvent) {
+cAMLAttr_resizable.handlers["DOMNodeRemovedFromDocument"]	= function(oEvent) {
 	this.ownerElement.$resizable	= false;
 };
 
 // Register Attribute
-fAmple_extend(cAttr_resizable);
+fAmple_extend(cAMLAttr_resizable);

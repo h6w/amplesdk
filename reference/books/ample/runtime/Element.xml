@@ -230,6 +230,22 @@
 					</locale>
 				</description>
 			</attribute>
+			<!-- Localizaiton -->
+			<attribute name="aml:content" type="String">
+				<description>
+					<locale>
+						Name of locale key to substitute element's content.
+					</locale>
+				</description>
+			</attribute>
+			<attribute name="aml:values" type="String">
+				<description>
+					<locale>
+						Semicolon-separated list of name:locale key pairs to substitute element's attributes or properties.
+						For example: value:key_value;.innerHTML:key_innerHTML
+					</locale>
+				</description>
+			</attribute>
 		</attributes>
 		<methods>
 			<method name="getAttribute" type="String">
@@ -580,6 +596,29 @@
 				<description>
 					<locale>
 						Activates element by dispatching <link type="event">DOMActivate</link> event to the element.
+					</locale>
+				</description>
+			</method>
+			<method name="$mapAttribute" type="Void">
+				<arguments>
+					<argument name="name" type="String">
+						<description>
+							<locale>
+								Attribute name
+							</locale>
+						</description>
+					</argument>
+					<argument name="value" type="String">
+						<description>
+							<locale>
+								Attribute value. null if attribute is being removed.
+							</locale>
+						</description>
+					</argument>
+				</arguments>
+				<description>
+					<locale>
+						<b>UI element definition API.</b> Provide your function to map attribute value to shadow tree. Not called for id, class and style attributes.
 					</locale>
 				</description>
 			</method>
@@ -1148,7 +1187,7 @@
 						Fires on the target element when the user drags the object to a valid drop target.
 					</locale>
 					<locale xml:lang="ru">
-						Загорается на объекте - валидном месте оставления, когда указатель мыши входит в пределы границ  во время перетаскивания другого объекта.
+						Загорается на объекте - валидном месте оставления, когда указатель мыши входит в пределы границ во время перетаскивания другого объекта.
 					</locale>
 				</description>
 			</event>
@@ -1165,7 +1204,7 @@
 						Fires on the target object when the user moves the mouse out of a valid drop target during a drag operation.
 					</locale>
 					<locale xml:lang="ru">
-						Загорается на объекте - валидном месте оставления, когда указатель мыши выходит за пределы границ  во время перетаскивания другого объекта.
+						Загорается на объекте - валидном месте оставления, когда указатель мыши выходит за пределы границ во время перетаскивания другого объекта.
 					</locale>
 				</description>
 			</event>
@@ -1265,6 +1304,15 @@
 					<locale xml:lang="ru">
 						Загорается на объекте непрерывно, пока его размеры изменяются пользователем.
 						Свойство <link type="property">edge</link> содержит значение of the edge
+					</locale>
+				</description>
+			</event>
+			<!-- Locale -->
+			<event name="localechange" type="CustomEvent" cancelable="false" bubbles="false">
+				<description>
+					<locale>
+						Fires when locale has been successfully changed.
+						The <link type="property" href="runtime:CustomEvent">detail</link> property keeps the new locale name name.
 					</locale>
 				</description>
 			</event>

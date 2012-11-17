@@ -360,7 +360,7 @@
 			<node title="Elements">
 				<node title="Windows">
 					<node title="dialog" url="ample/xul/dialog.xml"/>
-					<node title="overlay" xurl="ample/xul/overlay.xml"/>
+					<node title="overlay" url="ample/xul/overlay.xml"/>
 					<node title="preference" xurl="ample/xul/preference.xml"/>
 					<node title="preferences" xurl="ample/xul/preferences.xml"/>
 					<node title="prefpane" xurl="ample/xul/prefpane.xml"/>
@@ -480,7 +480,7 @@
 					<node title="commandset" url="ample/xul/commandset.xml"/>
 					<node title="broadcaster" url="ample/xul/broadcaster.xml"/>
 					<node title="broadcasterset" url="ample/xul/broadcasterset.xml"/>
-					<node title="observes" xurl="ample/xul/observes.xml"/>
+					<node title="observes" url="ample/xul/observes.xml"/>
 					<node title="key" url="ample/xul/key.xml"/>
 					<node title="keyset" url="ample/xul/keyset.xml"/>
 					<node title="stringbundle" xurl="ample/xul/stringbundle.xml"/>
@@ -517,7 +517,7 @@
 				<node title="sidebar" xurl="ample/aui/sidebar.xml"/>
 				<node title="sound" xurl="ample/aui/sound.xml"/>
 				<node title="xhtml" xurl="ample/aui/xhtml.xml"/>
- 			</node>
+			</node>
 		</node>
 	</node>
 </book>
