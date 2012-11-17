@@ -9,6 +9,7 @@ classes/cXULWindowElement.js
 
 # Managers
 managers/oXULCommandDispatcher.js
+managers/oXULBroadcastDispatcher.js
 managers/oXULPopupManager.js
 managers/oXULReflowManager.js
 managers/oXULWindowManager.js
@@ -34,6 +35,7 @@ elements/script.js
 # commands
 elements/broadcaster.js
 elements/broadcasterset.js
+elements/observes.js
 elements/command.js
 elements/commandset.js
 elements/key.js
@@ -64,7 +66,7 @@ elements/button.js
 elements/panel.js
 elements/popupset.js
 elements/progressmeter.js
-#elements/scrollbox.js
+elements/scrollbox.js
 elements/splitter.js
 elements/statusbar.js
 elements/statusbarpanel.js

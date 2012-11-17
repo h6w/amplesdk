@@ -1,4 +1,4 @@
-//const MAXOFRADIOs = 2; //Already declared
+const MAXOFRADIOs = 2;
 var attributesBoxList = new Object();
 //var eventsBoxList = new Object();
 
@@ -63,7 +63,7 @@ function initContextMenu() {
 	parentPopup.menuitems = []
 	for (var i in elementList) {
 		var menuitem = xml2Dom(
-			'<menuitem label={i} oncommand={"createXULElements(this.label)"}/>'
+			<menuitem label={i} oncommand={"createXULElements(this.label)"}/>
 					);
 		parentPopup.appendChild(menuitem);
 		parentPopup.menuitems[i] = menuitem;
@@ -80,7 +80,7 @@ function initNewElement() {
 
 	box.buttons = {};
 	for (var i in elementList) {
-		var xml = '<button hidden="true" crop="right" label={i} ondraggesture="dragStartFromNewElement(this.label)" onclick={"if(2 == event.button)prependXULElement(\'"+i+"\', event.shiftKey);"} onmousedown={"if(event.button==1)createAndMove(\'"+i+"\', true);"} oncommand={"createAndMove(\'"+i+"\', event.shiftKey);"}/>';
+		var xml = <button hidden="true" crop="right" label={i} ondraggesture="dragStartFromNewElement(this.label)" onclick={"if(2 == event.button)prependXULElement('"+i+"', event.shiftKey);"} onmousedown={"if(event.button==1)createAndMove('"+i+"', true);"} oncommand={"createAndMove('"+i+"', event.shiftKey);"}/>;
 		var button = xml2Dom(xml);
 		box.appendChild(button); 
 		box.buttons[i] = button;
@@ -195,25 +195,25 @@ function addElementToElementTree(xulElement, parentTreeitem) {
 	parentTreeitem.setAttribute("open", "true");
 
 	var treeitem =  //as xml
-	'<treeitem>\
-		<treerow>\
-			<treecell editable="false" />\
-			<treecell/>\
-		</treerow>\
-		<treechildren/>\
-	</treeitem>';
+	<treeitem>
+		<treerow>
+			<treecell editable="false" />
+			<treecell/>
+		</treerow>
+		<treechildren/>
+	</treeitem>;
 
 	if (xulElement.nodeType == xulElement.TEXT_NODE) {//nodetext
-		treeitem.treerow.treecell[0].setAttribute('label',"[#text]");
+		treeitem.treerow.treecell[0].@label = "[#text]";
 		delete treeitem.treechldren;
 	} else if (xulElement.nodeType == 7) {//processing instruction
-		treeitem.treerow.treecell[0].setAttribute('label',"#"+xulElement.nodeName+"");
+		treeitem.treerow.treecell[0].@label = "#"+xulElement.nodeName+"";
 	} else if (xulElement.nodeType == xulElement.ELEMENT_NODE) {//assume element
-		treeitem.treerow.treecell[0].setAttribute('label',xulElement.tagName);
+		treeitem.treerow.treecell[0].@label = xulElement.tagName;
 
-		treeitem.treerow.treecell[1].setAttribute('id',"iTc"+Math.random());
+		treeitem.treerow.treecell[1].@id = "iTc"+Math.random();
 		if (xulElement.hasAttribute("id")) { 
-			treeitem.treerow.treecell[1].setAttribute('label',xulElement.id);
+			treeitem.treerow.treecell[1].@label = xulElement.id;
 		}
 	} else {
 		alert('error: other type of node');
@@ -292,14 +292,14 @@ function createText(str) {
 }
 
 function createAttributesBox(elementName) {
-	var grid_xml = '\
-	<grid style="overflow:auto">\
-		<columns>\
-			<column ordinal="center"/>\
-			<column flex="1"/>\
-		</columns>\
-		<!--rows-->\
-	</grid>';
+	var grid_xml =
+	<grid style="overflow:auto">
+		<columns>
+			<column ordinal="center"/>
+			<column flex="1"/>
+		</columns>
+		<!--rows-->
+	</grid>;
 	if (!(elementName in attributesBoxList)) {
 		var grid = attributesBoxList[elementName] = xml2Dom(grid_xml);//document.createElement("grid");
 		//document.getElementById("attributes-deck").appendChild(grid);
@@ -310,17 +310,17 @@ function createAttributesBox(elementName) {
 function createAttributeRows(xulElementName) {
 	var rows = this.document.createElement("rows");
 	var grid = attributesBoxList[xulElementName];
-	var row_xml = '<row align="center"><label ondblclick="this.parentNode.editBox.init();onChangeAttribute(this.parentNode.editBox)" class="attribute-label" /></row>';
+	var row_xml = <row align="center"><label ondblclick="this.parentNode.editBox.init();onChangeAttribute(this.parentNode.editBox)" class="attribute-label" /></row>;
 
 	if ("attributes" in elementList[xulElementName])
 	for (var name in elementList[xulElementName]["attributes"]) {
-		row_xml.label.setAttribute('value',name);
+		row_xml.label.@value = name;
 		var row = xml2Dom(row_xml, document);
 		row = createAttributeRow(row, name, elementList[xulElementName]["attributes"][name]);
 		rows.appendChild(row);
 	}
 
-	rows.appendChild(xml2Dom(' <separator class="groove"/> '));
+	rows.appendChild(xml2Dom( <separator class="groove"/> ));
 
 	// common attributes
 	for (var name in commonAttributes) {
@@ -328,11 +328,11 @@ function createAttributeRows(xulElementName) {
 			continue;
 		}
 		if (name == "id") {
-			row_xml.label.setAttribute('ondblclick',"this.parentNode.editBox.init();onIdChange(this.parentNode.editBox)");
+			row_xml.label.@ondblclick = "this.parentNode.editBox.init();onIdChange(this.parentNode.editBox)";
 		} else {
-			row_xml.label.setAttribute('ondblclick',"this.parentNode.editBox.init();onChangeAttribute(this.parentNode.editBox)");
+			row_xml.label.@ondblclick = "this.parentNode.editBox.init();onChangeAttribute(this.parentNode.editBox)"
 		}
-		row_xml.label.setAttribute('value',name);
+		row_xml.label.@value = name;
 		var row = xml2Dom(row_xml);
 
 		row = createAttributeRow(row, name, commonAttributes[name]);
@@ -378,7 +378,7 @@ function createAttributeRow(row, name, attr) {
 			row.editBox = new TextEditBox(name, attr, onchange);
 			row.appendChild(row.editBox.create());
 			if (name == "id") {
-				row.appendChild(xml2Dom('<observes attribute="label" onbroadcast="syncTreecellWithTextbox(this.parentNode.firstChild.treeitem.idTreecell, this.previousSibling);onChangeAttribute(parentNode.editBox)"/>'));
+				row.appendChild(xml2Dom(<observes attribute="label" onbroadcast="syncTreecellWithTextbox(this.parentNode.firstChild.treeitem.idTreecell, this.previousSibling);onChangeAttribute(parentNode.editBox)"/>));
 			}
 		} else if (type == AT_SELECT && attr["values"].length > MAXOFRADIOs) { //menulist
 			row.editBox = new SelectEditBox(name, attr, onChangeAttribute);
@@ -449,10 +449,10 @@ function createEventsBox(element) {
 	var name = element.tagName;
 	var tabpanel = document.getElementById('events-tabpanel');
 
-	var tabbox = xml2Dom('<tabbox id="events-tabbox" flex="1" style="margin:0px; padding:0px" >\
-				<tabs style="overflow:hidden"/>\
-				<tabpanels style="margin:0px; padding:4px" flex="1"/>\
-			</tabbox>');
+	var tabbox = xml2Dom(<tabbox id="events-tabbox" flex="1" style="margin:0px; padding:0px" >
+				<tabs style="overflow:hidden"/>
+				<tabpanels style="margin:0px; padding:4px" flex="1"/>
+			</tabbox>);
 	tabbox.eventTabMap = {}
 	var eventGroup = {};
 	for (var i in elementList) {
@@ -461,12 +461,12 @@ function createEventsBox(element) {
 	for (var i in commonEventsGroup) { eventGroup[i] = commonEventsGroup[i]; }
 
 	for (var i in eventGroup) {
-		tabbox.eventTabMap[i] = tabbox.firstChild.appendChild(xml2Dom('<tab label={i}/>'));
-		var panel = xml2Dom('<tabpanel orient="vertical" ></tabpanel>');
+		tabbox.eventTabMap[i] = tabbox.firstChild.appendChild(xml2Dom(<tab label={i}/>));
+		var panel = xml2Dom(<tabpanel orient="vertical" ></tabpanel>);
 		for (var j=0; j < eventGroup[i].length; j++) {
 			var label = eventGroup[i][j];
-			panel.appendChild(xml2Dom('<vbox flex="1"><label value={label}/><textbox oninput={"addEvent(treeitem, \'"+label+"\', this.value)"} multiline="true" wrap="off" onkeypress="if (event.keyCode == event.DOM_VK_TAB &amp;&amp; !event.ctrlKey) {insertTab(this); return false;}" flex="1"/></vbox>'));
-			panel.appendChild(xml2Dom('<splitter tooltiptext={label} collapse="none"><!--<grippy/>--></splitter>'));
+			panel.appendChild(xml2Dom(<vbox flex="1"><label value={label}/><textbox oninput={"addEvent(treeitem, '"+label+"', this.value)"} multiline="true" wrap="off" onkeypress="if (event.keyCode == event.DOM_VK_TAB &amp;&amp; !event.ctrlKey) {insertTab(this); return false;}" flex="1"/></vbox>));
+			panel.appendChild(xml2Dom(<splitter tooltiptext={label} collapse="none"><!--<grippy/>--></splitter>));
 		}
 		tabbox.lastChild.appendChild(panel);
 	}
@@ -614,7 +614,7 @@ function xml2Dom(xml, doc) {//consider elements
 	var el = doc.createElement(xml.name());
 	
 	var attributes = xml.attributes();
-	for (var i in attributes) {
+	for each(i in attributes) {
 		el.setAttribute(i.name(), i);
 	}
 	
@@ -647,9 +647,9 @@ function createStylesBox() {
 
 	for (var group in style_groups) {
 		for (var name in style_groups[group]) {
-			var row_xml = '<row align="center" tooltiptext={name}>\
-					<label minwidth="80" crop="right" tooltiptext={name} value={name}/>\
-				</row>';
+			var row_xml = <row align="center" tooltiptext={name}>
+					<label minwidth="80" crop="right" tooltiptext={name} value={name}/>
+				</row>;
 			var row = xml2Dom(row_xml);
 			row.name = name;
 
@@ -660,7 +660,7 @@ function createStylesBox() {
 			row.appendChild(row.editBox.create());
 			rows.appendChild(row);
 		}
-		rows.appendChild(xml2Dom('<separator class="groove-thin"/>'));
+		rows.appendChild(xml2Dom(<separator class="groove-thin"/>));
 	}
 }
 
@@ -709,11 +709,10 @@ function removeStyle(label ,name) {
 var focusedElement = null; //dummy object which has a setAttribute function
 var preRow = 0;
 var preStyle = {};
-////lightStyle already declared.
-//const lightStyle = {color:"green", borderTopStyle:"solid", borderTopWidth:"1px", borderTopColor:"green"
-//		, borderLeftStyle:"solid", borderLeftWidth:"1px", borderLeftColor:"green"
-//		, borderRightStyle:"solid", borderRightWidth:"1px", borderRightColor:"green"
-//		, borderBottomStyle:"solid", borderBottomWidth:"1px", borderBottomColor:"green"}
+const lightStyle = {color:"green", borderTopStyle:"solid", borderTopWidth:"1px", borderTopColor:"green"
+		, borderLeftStyle:"solid", borderLeftWidth:"1px", borderLeftColor:"green"
+		, borderRightStyle:"solid", borderRightWidth:"1px", borderRightColor:"green"
+		, borderBottomStyle:"solid", borderBottomWidth:"1px", borderBottomColor:"green"}
 function lightup(event){
 	var row = {}, obj = {};
 	var tree = this.document.getElementById("element-tree");
@@ -784,6 +783,3 @@ function assert(cond) {
 	}
 }
 */
-ample.ready(function() {
-                initWindow();
-            });

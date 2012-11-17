@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2009 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -37,11 +37,11 @@ function fFocusManager_focus(oElement) {
 
 			var oEvent	= new cFocusEvent;
 			oEvent.initFocusEvent("focus", false, false, window, null, null);
-			fNode_dispatchEvent(oElement, oEvent);
+			fEventTarget_dispatchEvent(oElement, oEvent);
 
 			var oEvent	= new cFocusEvent;
 			oEvent.initFocusEvent("DOMFocusIn", true, false, window, null, null);
-			fNode_dispatchEvent(oElement, oEvent);
+			fEventTarget_dispatchEvent(oElement, oEvent);
 		}
 	}
 };
@@ -70,11 +70,11 @@ function fFocusManager_blur(oElement) {
 			// If element has not been removed from DOM
 			var oEvent	= new cFocusEvent;
 			oEvent.initFocusEvent("blur", false, false, window, null, null);
-			fNode_dispatchEvent(oElement, oEvent);
+			fEventTarget_dispatchEvent(oElement, oEvent);
 
 			var oEvent	= new cFocusEvent;
 			oEvent.initFocusEvent("DOMFocusOut", true, false, window, null, null);
-			fNode_dispatchEvent(oElement, oEvent);
+			fEventTarget_dispatchEvent(oElement, oEvent);
 		}
 	}
 };
@@ -156,17 +156,17 @@ function fFocusManager_onMouseDown(oEvent) {
 
 	// Find new element to focus
 	var oFocusGroup	= null;
-    for (var oElement = oEvent.target; oElement.nodeType != 9 /* cNode.DOCUMENT_NODE */ && !oFocusGroup; oElement = oElement.parentNode) {
-//    	console.log(oElement.nodeName, fFocusManager_isTabStop(oElement, 0, true))
-    	if (fFocusManager_isTabStop(oElement, 0, true))
-    		oFocusGroup = oElement;
-    }
+	for (var oElement = oEvent.target; oElement.nodeType != 9 /* cNode.DOCUMENT_NODE */ && !oFocusGroup; oElement = oElement.parentNode) {
+//		console.log(oElement.nodeName, fFocusManager_isTabStop(oElement, 0, true))
+		if (fFocusManager_isTabStop(oElement, 0, true))
+			oFocusGroup	= oElement;
+	}
 
 	//
-    if (oFocusGroup)
-    	fFocusManager_focus(oFocusGroup);
-    else
-    if (oFocusManager_focusGroup)
+	if (oFocusGroup)
+		fFocusManager_focus(oFocusGroup);
+	else
+	if (oFocusManager_focusGroup)
 		fFocusManager_blur(oFocusManager_focusGroup);
 };
 
@@ -176,10 +176,10 @@ function fFocusManager_onKeyDown(oEvent) {
 		return;
 
 	// Prevent system tab combinations handling
-	if (oEvent.keyIdentifier == "Tab" && (oEvent.altKey || oEvent.ctrlKey))
+	if (oEvent.keyIdentifier == "U+0009" && (oEvent.altKey || oEvent.ctrlKey))
 		return;
 
-	if (oEvent.keyIdentifier == "Tab") {
+	if (oEvent.keyIdentifier == "U+0009") {
 		var oFocusGroup	= null,
 			nTabIndexCurrent	= 0;
 
