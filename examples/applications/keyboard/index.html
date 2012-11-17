@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Ample Keyboard Demo</title>
+		<script type="text/javascript" src="../../../../ample/runtime.js"></script>
+		<script type="text/javascript" src="../../../../ample/languages/xhtml/xhtml.js"></script>
+		<script type="text/javascript" src="../../../../ample/languages/xul/xul.js"></script>
+		<link type="text/ample+css" href="../../../../ample/languages/xul/themes/default/style.css" rel="stylesheet"/>
+
+		<style type="text/css">
+			html, body {
+				width:	100%;
+				height: 100%;
+				padding:0;
+				margin:	0;
+				overflow:hidden;
+			}
+			body {
+				border: 0;
+				font-family: Arial;
+				font-size: 13px;
+			}
+		</style>
+
+        <script type="text/javascript">
+            var keymap = {
+                "U+000D":"CR",
+                "U+000E":"SO",
+                "U+000F":"SI",
+                "U+001B":"ESC",
+                "U+0020":"SP",
+                "U+0021":"!",
+                "U+0022":"\"",
+                "U+0023":"#",
+                "U+0024":"$",
+                "U+0025":"%",
+                "U+0026":"&",
+                "U+0027":"'",
+                "U+0028":"(",
+                "U+0029":")",
+                "U+002A":"*",
+                "U+002B":"0",
+                "U+002C":",",
+                "U+002D":"-",
+                "U+002E":".",
+                "U+0030":"0",
+                "U+0031":"1",
+                "U+0032":"2",
+                "U+0033":"3",
+                "U+0034":"4",
+                "U+0035":"5",
+                "U+0036":"6",
+                "U+0037":"7",
+                "U+0038":"8",
+                "U+0039":"9",
+                "U+003A":":",
+                "U+003B":";",
+                "U+003C":"<",
+                "U+003D":"=",
+                "U+003E":">",
+                "U+003F":"?",
+                "U+0040":"@",
+                "U+0041":"A",
+                "U+0042":"B",
+                "U+0043":"C",
+                "U+0044":"D",
+                "U+0045":"E",
+                "U+0046":"F",
+                "U+0047":"G",
+                "U+0048":"H",
+                "U+0049":"I",
+                "U+004A":"J",
+                "U+004B":"K",
+                "U+004C":"L",
+                "U+004D":"M",
+                "U+004E":"N",
+                "U+004F":"O",
+                "U+0050":"P",
+                "U+0051":"Q",
+                "U+0052":"R",
+                "U+0053":"S",
+                "U+0054":"T",
+                "U+0055":"U",
+                "U+0056":"V",
+                "U+0057":"W",
+                "U+0058":"X",
+                "U+0059":"Y",
+                "U+005A":"Z",
+                "U+005B":"[",
+                "U+005C":"\\",
+                "U+005D":"]",
+                "U+005E":"^",
+                "U+005F":"_",
+                "U+0060":"`",
+                "U+0061":"a",
+                "U+0062":"b",
+                "U+0063":"c",
+                "U+0064":"d",
+                "U+0065":"e",
+                "U+0066":"f",
+                "U+0067":"g",
+                "U+0068":"h",
+                "U+0069":"i",
+                "U+006A":"j",
+                "U+006B":"k",
+                "U+006C":"l",
+                "U+006D":"m",
+                "U+006E":"n",
+                "U+006F":"o",
+                "U+0070":"p",
+                "U+0071":"q",
+                "U+0072":"r",
+                "U+0073":"s",
+                "U+0074":"t",
+                "U+0075":"u",
+                "U+0076":"v",
+                "U+0077":"w",
+                "U+0078":"x",
+                "U+0079":"y",
+                "U+007A":"z",
+                "U+007B":"{",
+                "U+007C":"|",
+                "U+007D":"}"
+            };
+
+            function fireMouseEvent(key,event) {
+                var button = ample.getElementById(keymap[key]);
+                var evt = ample.createEvent("MouseEvents");
+                evt.initMouseEvent(, true, true, window,
+                  0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                if (button) { 
+                    var canceled = !button.dispatchEvent(evt);
+                    if(canceled) {
+                      // A handler called preventDefault
+                      alert("Keypress unexpectedly cancelled.");
+                    }
+                }
+            }
+
+            function pressKey(key) {
+                fireMouseEvent(key,'mousedown');
+                fireMouseEvent(key,'mouseup');
+            }
+    
+            function printKey() {
+                var str = keymap[event.keyIdentifier];
+                //alert(str);
+                if (str) str = str + ' key pressed.';
+                else if (event.srcElement.id) str = event.srcElement.id + ' button pressed.';
+                else if (event.keyIdentifier) str = 'Unmapped key:'+event.keyIdentifier;
+                else str = 'Unknown event.';
+                var message = '<xul:label xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:xi="http://www.w3.org/2001/XInclude">'+ str + '</xul:label>';
+                ample.query('#keylog').append(message);
+            }
+
+        </script>
+	</head>
+	<body bgcolor="silver">
+        <script type="application/ample+xml">
+        <xul:page  xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:aml="http://www.amplesdk.com/ns/aml">
+        <xul:commandset>
+            <xul:command id="buttonpressed" oncommand="printKey();" />
+        </xul:commandset>
+        <xul:keyset oncommand="pressKey(event.target.getAttribute('key'));">
+                    <xul:key key="F1" />
+                    <xul:key key="F2" />
+                    <xul:key key="F3" />
+                    <xul:key key="F4" />
+                    <xul:key key="F5" />
+                    <xul:key key="F6" />
+                    <xul:key key="F7" />
+                    <xul:key key="F8" />
+                    <xul:key key="F9" />
+                    <xul:key key="F10" />
+                    <xul:key key="F11" />
+                    <xul:key key="F12" />
+                    <xul:key key="PrtSc" />
+                    <xul:key key="Ins" />
+                    <xul:key key="Del" />
+                <!-- Line 1: `1234567890-=<bs> -->
+                    <xul:key key="`" />
+                    <xul:key key="U+0031" />
+                    <xul:key key="U+0032" />
+                    <xul:key key="U+0033" />
+                    <xul:key key="U+0034" />
+                    <xul:key key="U+0035" />
+                    <xul:key key="U+0036" />
+                    <xul:key key="U+0037" />
+                    <xul:key key="U+0038" />
+                    <xul:key key="U+0039" />
+                    <xul:key key="U+0030" />
+                    <xul:key key="-" />
+                    <xul:key key="=" />
+                    <xul:key key="BKSP" />
+                <!-- Line 2: <tab>QWERTYUIOOP[] -->            
+                    <xul:key key="TAB" />
+                    <xul:key key="U+0051" />
+                    <xul:key key="U+0057" />
+                    <xul:key key="U+0045" />
+                    <xul:key key="U+0052" />
+                    <xul:key key="U+0054" />
+                    <xul:key key="U+0059" />
+                    <xul:key key="U+0055" />
+                    <xul:key key="U+0049" />
+                    <xul:key key="U+004F" />
+                    <xul:key key="U+0050" />
+                    <xul:key key="U+005B" />
+                    <xul:key key="U+005D" />
+                <!-- Line 3: <caps>ASDFGHJKL;'\<enter> -->            
+                    <xul:key key="CAPS" />
+                    <xul:key key="U+0041" />
+                    <xul:key key="U+0053" />
+                    <xul:key key="U+0044" />
+                    <xul:key key="U+0046" />
+                    <xul:key key="U+0047" />
+                    <xul:key key="U+0048" />
+                    <xul:key key="U+004A" />
+                    <xul:key key="U+004B" />
+                    <xul:key key="U+004C" />
+                    <xul:key key=";" />
+                    <xul:key key="&apos;" />
+                    <xul:key key="\" />
+                    <xul:key key="ENTER" />
+                <!-- Line 4: <shift>ZXCVBNM,./<shift> -->
+                    <xul:key key="SHIFT" />
+                    <xul:key key="\" />
+                    <xul:key key="U+005A" />
+                    <xul:key key="U+0058" />
+                    <xul:key key="U+0043" />
+                    <xul:key key="U+0056" />
+                    <xul:key key="U+0042" />
+                    <xul:key key="U+004E" />
+                    <xul:key key="U+004D" />
+                    <xul:key key="," />
+                    <xul:key key="." />
+                    <xul:key key="/" />
+                    <xul:key key="SHIFT" />
+                <!-- Line 5: <ctrl> <meta> <alt> <space> <alt> <meta2> <ctrl> <arrows> -->
+                    <xul:key key="CTRL" />
+                    <xul:key key="META" />
+                    <xul:key key="ALT" />
+                    <xul:key key="SPACE" />
+                    <xul:key key="ALT" />
+                    <xul:key key="META2" />
+                    <xul:key key="CTRL" />
+                    <xul:key key="LEFT" />
+                    <xul:key key="^" />
+                    <xul:key key="v" />
+                    <xul:key key="RIGHT" />
+        </xul:keyset>
+        <xul:hbox flex="1">
+            <xul:vbox flex="2">
+            <!-- Keyboard -->
+                <!-- Line 0: F1-F12 <PrtSc> <Pause> <Insert> <Del> -->
+                <xul:hbox flex="1">
+                    <xul:button flex="1" command="buttonpressed" id="F1" label="F1" />
+                    <xul:button flex="1" command="buttonpressed" id="F2" label="F2" />
+                    <xul:button flex="1" command="buttonpressed" id="F3" label="F3" />
+                    <xul:button flex="1" command="buttonpressed" id="F4" label="F4" />
+                    <xul:button flex="1" command="buttonpressed" id="F5" label="F5" />
+                    <xul:button flex="1" command="buttonpressed" id="F6" label="F6" />
+                    <xul:button flex="1" command="buttonpressed" id="F7" label="F7" />
+                    <xul:button flex="1" command="buttonpressed" id="F8" label="F8" />
+                    <xul:button flex="1" command="buttonpressed" id="F9" label="F9" />
+                    <xul:button flex="1" command="buttonpressed" id="F10" label="F10" />
+                    <xul:button flex="1" command="buttonpressed" id="F11" label="F11" />
+                    <xul:button flex="1" command="buttonpressed" id="F12" label="F12" />
+                    <xul:button flex="1" command="buttonpressed" id="PrtSc" label="PrtSc" />
+                    <xul:button flex="1" command="buttonpressed" id="Ins" label="Ins" />
+                    <xul:button flex="1" command="buttonpressed" id="Del" label="Del" />
+                </xul:hbox>
+                <!-- Line 1: `1234567890-=<bs> -->
+                <xul:hbox flex="1">
+                    <xul:button flex="1" command="buttonpressed" id="`" label="`" />
+                    <xul:button flex="1" command="buttonpressed" id="1" label="1" />
+                    <xul:button flex="1" command="buttonpressed" id="2" label="2" />
+                    <xul:button flex="1" command="buttonpressed" id="3" label="3" />
+                    <xul:button flex="1" command="buttonpressed" id="4" label="4" />
+                    <xul:button flex="1" command="buttonpressed" id="5" label="5" />
+                    <xul:button flex="1" command="buttonpressed" id="6" label="6" />
+                    <xul:button flex="1" command="buttonpressed" id="7" label="7" />
+                    <xul:button flex="1" command="buttonpressed" id="8" label="8" />
+                    <xul:button flex="1" command="buttonpressed" id="9" label="9" />
+                    <xul:button flex="1" command="buttonpressed" id="0" label="0" />
+                    <xul:button flex="1" command="buttonpressed" id="-" label="-" />
+                    <xul:button flex="1" command="buttonpressed" id="=" label="=" />
+                    <xul:button flex="1" command="buttonpressed" id="BKSP" label="BKSP" />
+                </xul:hbox>
+                <!-- Line 2: <tab>QWERTYUIOOP[] -->            
+                <xul:hbox flex="1">
+                    <xul:button flex="1" command="buttonpressed" id="TAB" label="TAB" />
+                    <xul:button flex="1" command="buttonpressed" id="Q" label="Q" oncommand="alert('Q button pressed.');" />
+                    <xul:button flex="1" command="buttonpressed" id="W" label="W" />
+                    <xul:button flex="1" command="buttonpressed" id="E" label="E" />
+                    <xul:button flex="1" command="buttonpressed" id="R" label="R" />
+                    <xul:button flex="1" command="buttonpressed" id="T" label="T" />
+                    <xul:button flex="1" command="buttonpressed" id="Y" label="Y" />
+                    <xul:button flex="1" command="buttonpressed" id="U" label="U" />
+                    <xul:button flex="1" command="buttonpressed" id="I" label="I" />
+                    <xul:button flex="1" command="buttonpressed" id="O" label="O" />
+                    <xul:button flex="1" command="buttonpressed" id="P" label="P" />
+                    <xul:button flex="1" command="buttonpressed" id="[" label="[" />
+                    <xul:button flex="1" command="buttonpressed" id="]" label="]" />
+                </xul:hbox>
+                <!-- Line 3: <caps>ASDFGHJKL;'\<enter> -->            
+                <xul:hbox flex="1">
+                    <xul:button flex="1" command="buttonpressed" id="CAPS" label="CAPS" />
+                    <xul:button flex="1" command="buttonpressed" id="A" label="A" />
+                    <xul:button flex="1" command="buttonpressed" id="S" label="S" />
+                    <xul:button flex="1" command="buttonpressed" id="D" label="D" />
+                    <xul:button flex="1" command="buttonpressed" id="F" label="F" />
+                    <xul:button flex="1" command="buttonpressed" id="G" label="G" />
+                    <xul:button flex="1" command="buttonpressed" id="H" label="H" />
+                    <xul:button flex="1" command="buttonpressed" id="J" label="J" />
+                    <xul:button flex="1" command="buttonpressed" id="K" label="K" />
+                    <xul:button flex="1" command="buttonpressed" id="L" label="L" />
+                    <xul:button flex="1" command="buttonpressed" id=";" label=";" />
+                    <xul:button flex="1" command="buttonpressed" id="&apos;" label="&apos;" />
+                    <xul:button flex="1" command="buttonpressed" id="\" label="\" />
+                    <xul:button flex="1" command="buttonpressed" id="ENTER" label="ENTER" />
+                </xul:hbox>
+                <!-- Line 4: <shift>ZXCVBNM,./<shift> -->
+                <xul:hbox flex="1">
+                    <xul:button flex="1" command="buttonpressed" id="SHIFTL" label="SHIFT" />
+                    <xul:button flex="1" command="buttonpressed" id="Z" label="Z" />
+                    <xul:button flex="1" command="buttonpressed" id="X" label="X" />
+                    <xul:button flex="1" command="buttonpressed" id="C" label="C" />
+                    <xul:button flex="1" command="buttonpressed" id="V" label="V" />
+                    <xul:button flex="1" command="buttonpressed" id="B" label="B" />
+                    <xul:button flex="1" command="buttonpressed" id="N" label="N" />
+                    <xul:button flex="1" command="buttonpressed" id="M" label="M" />
+                    <xul:button flex="1" command="buttonpressed" id="," label="," />
+                    <xul:button flex="1" command="buttonpressed" id="." label="." />
+                    <xul:button flex="1" command="buttonpressed" id="/" label="/" />
+                    <xul:button flex="1" command="buttonpressed" id="SHIFTR" label="SHIFT" />
+                </xul:hbox>
+                <!-- Line 5: <ctrl> <meta> <alt> <space> <alt> <meta2> <ctrl> <arrows> -->
+                <xul:hbox flex="1">
+                    <xul:button flex="1" command="buttonpressed" id="CTRLL" label="CTRL" />
+                    <xul:button flex="1" command="buttonpressed" id="META" label="META" />
+                    <xul:button flex="1" command="buttonpressed" id="ALTL" label="ALT" />
+                    <xul:button flex="1" command="buttonpressed" id="SPACE" label="SPACE" />
+                    <xul:button flex="1" command="buttonpressed" id="ALTR" label="ALT" />
+                    <xul:button flex="1" command="buttonpressed" id="META2" label="META2" />
+                    <xul:button flex="1" command="buttonpressed" id="CTRLR" label="CTRL" />
+                    <xul:button flex="1" command="buttonpressed" id="LEFT" label="LEFT" />
+                    <xul:button flex="1" command="buttonpressed" id="^" label="^" />
+                    <xul:button flex="1" command="buttonpressed" id="v" label="v" />
+                    <xul:button flex="1" command="buttonpressed" id="RIGHT" label="RIGHT" />
+                </xul:hbox>
+            </xul:vbox>
+            <xul:vbox flex="1" style="overflow: auto;">
+            <!-- Console -->
+                <xul:vbox id="keylog" style="overflow: auto;">
+                    <xul:label>All key operations will be logged here.</xul:label>
+                </xul:vbox>
+            </xul:vbox>
+        </xul:hbox>
+        </xul:page>
+        </script>
+	</body>
+</html>

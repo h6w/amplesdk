@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2009 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -27,9 +27,17 @@ cXULElement_key._handleKeyDown	= function(oEvent, oElement) {
 	}
 
 	// filter out by key
-	if (oElement.hasAttribute("key"))
-		if (oEvent.keyIdentifier != oElement.getAttribute("key"))
+	if (oElement.hasAttribute("key")) {
+		var sIdentifier	= oEvent.keyIdentifier,
+			sKey	= oElement.getAttribute("key");
+		if (sIdentifier.match(/^U\+(\d+)/)) {
+			if (String.fromCharCode(parseInt(RegExp.$1, 16)).toLowerCase() != sKey.toLowerCase())
+				return;
+		}
+		else
+		if (oEvent.keyIdentifier != sKey)
 			return;
+	}
 
 	// filter out by keycode
 	// TODO: KeyEvent changed to KeboardEvent, so no keyCode property is available!
@@ -47,10 +55,10 @@ cXULElement_key.handlers	= {
 		if (oEvent.target == this) {
 			switch (oEvent.attrName) {
 				case "keytext":
-			    	var aElements	= this.ownerDocument.querySelectorAll("[key='" + this.attributes["id"] + "']");
-			        for (var nIndex = 0, nLength = aElements.length; nIndex < nLength; nIndex++)
-			        	if (aElements[nIndex].namespaceURI == this.namespaceURI)
-				        	aElements[nIndex].setAttribute("acceltext", oEvent.newValue || '');
+					var aElements	= this.ownerDocument.querySelectorAll("[key='" + this.attributes["id"] + "']");
+					for (var nIndex = 0, nLength = aElements.length; nIndex < nLength; nIndex++)
+						if (aElements[nIndex].namespaceURI == this.namespaceURI)
+							aElements[nIndex].setAttribute("acceltext", oEvent.newValue || '');
 					break;
 			}
 		}

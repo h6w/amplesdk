@@ -3,9 +3,8 @@
 
 	include("cJSCompiler.php");
 
-	function fStripTags($sInput, $sTagName)
-	{
-        return preg_replace('/\/\/\->' . $sTagName . '.+\/\/<\-' . $sTagName . '/Us', "", $sInput);
+	function fStripTags($sInput, $sTagName) {
+		return preg_replace('/\/\/\->' . $sTagName . '.+\/\/<\-' . $sTagName . '/Us', "", $sInput);
 	}
 
 	$sInputFile		= $_SERVER["argv"][1];
@@ -73,7 +72,7 @@
 		$oCompiler->stripComments();
 		$sOutput	= $oCompiler->output;
 
-		$sOutput	= 	"".
+		$sOutput	=	"".
 						"(function () {\n" .
 							$sOutput . "\n" .
 						"})()" .

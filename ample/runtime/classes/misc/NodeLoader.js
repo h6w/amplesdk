@@ -1,17 +1,16 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2010 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
  */
 
 // Content Loader
-function fNodeLoader_clear(oElement)
-{
+function fNodeLoader_clear(oElement) {
 	if (oElement._request)
-	    delete oElement._request;
+		delete oElement._request;
 	if (oElement._timeout) {
 		fClearTimeout(oElement._timeout);
 		delete oElement._timeout;
@@ -20,8 +19,7 @@ function fNodeLoader_clear(oElement)
 	fElement_setPseudoClass(oElement, "load", false);
 };
 
-function fNodeLoader_abort(oElement)
-{
+function fNodeLoader_abort(oElement) {
 	if (oElement._timeout || oElement._request) {
 		if (oElement._request)
 			oElement._request	= oElement._request.abort();
@@ -30,7 +28,7 @@ function fNodeLoader_abort(oElement)
 		// Dispatch abort event
 		var oEvent	= new cEvent;
 		oEvent.initEvent("abort", false, false);
-		fNode_dispatchEvent(oElement, oEvent);
+		fEventTarget_dispatchEvent(oElement, oEvent);
 	}
 };
 
@@ -41,7 +39,7 @@ function fNodeLoader_load(oElement, sUrl, vData, fCallback) {
 	// Dispatch unload event
 	var oEvent	= new cEvent;
 	oEvent.initEvent("unload", false, false);
-	fNode_dispatchEvent(oElement, oEvent);
+	fEventTarget_dispatchEvent(oElement, oEvent);
 
 	// Remove nodes
 	while (oElement.lastChild)
@@ -63,18 +61,22 @@ function fNodeLoader_load(oElement, sUrl, vData, fCallback) {
 			// Clear
 			fNodeLoader_clear(oElement);
 			// Render Content
-	    	fElement_appendChild(oElement, fDocument_importNode(oElement.ownerDocument, oDocument.documentElement, true));
+			fElement_appendChild(oElement, fDocument_importNode(oElement.ownerDocument, oDocument.documentElement, true));
 			// Dispatch load event
-		    var oEvent		= new cEvent;
+			var oEvent		= new cEvent;
 			oEvent.initEvent("load", false, false);
-			fNode_dispatchEvent(oElement, oEvent);
+			fEventTarget_dispatchEvent(oElement, oEvent);
 		};
 		oSettings.error	= function(oRequest, sMessage) {
 			// Dispatch error event
-		    var oEvent		= new cEvent;
+			var oEvent		= new cEvent;
 			oEvent.initEvent("error", false, false);
-			fNode_dispatchEvent(oElement, oEvent);
+			fEventTarget_dispatchEvent(oElement, oEvent);
 		};
+		if (fCallback)
+			oSettings.complete	= function(oRequest, sStatus) {
+				fCallback(oRequest.responseText, sStatus, oRequest);
+			};
 
 		// Save in order to be able to cancel
 		oElement._request	= fQuery_ajax(oSettings);

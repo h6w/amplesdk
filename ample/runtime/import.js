@@ -1,7 +1,7 @@
 /*
  * Ample SDK - JavaScript GUI Framework
  *
- * Copyright (c) 2009 Sergey Ilinsky
+ * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  * See: http://www.amplesdk.com/about/licensing/
  *
@@ -45,11 +45,17 @@ var cString		= window.String,
 	fParseFloat	= window.parseFloat,
 	fIsNaN		= window.isNaN,
 	fIsFinite	= window.isFinite,
+	fEval		= window.eval,
 	fEncodeURIComponent	= window.encodeURIComponent,
 //	window objects
 	oUANavigator= window.navigator,
 	oUALocation	= window.location,
 	oUADocument	= window.document,
+//
+	fGlobal		= arguments.callee,
+//
+//	oUALocalStorage		= window.localStorage,
+//	oUASessionStorage	= window.sessionStorage,
 // constants
 	nNaN		= window.NaN,
 	nInfinity	= window.Infinity,

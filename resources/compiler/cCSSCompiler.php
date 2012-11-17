@@ -5,57 +5,50 @@
 
 		var $debug		= false;
 
-		function cCSSCompiler()
-		{
+		function cCSSCompiler() {
 
 		}
 
-		function readFromString($sString)
-		{
+		function readFromString($sString) {
 			$this->output	= $sString;
 		}
 
-		function readFromFile($sFileName)
-		{
+		function readFromFile($sFileName) {
 			$this->output	= $this->output . join("", file($sFileName));
 		}
 
-		function getOutput()
-		{
+		function getOutput() {
 			return $this->output;
 		}
 
-		function stripComments()
-		{
+		function stripComments() {
 			$sData	= $this->output;
 
-	        // Strip '/* comment */' comments
-	        $sData	= preg_replace('/\/\*.+\*\//Us', "", $sData);
+			// Strip '/* comment */' comments
+			$sData	= preg_replace('/\/\*.+\*\//Us', "", $sData);
 
-	        $this->output	= $sData;
+			$this->output	= $sData;
 		}
 
-	    function stripSpaces()
-	    {
+		function stripSpaces() {
 			$sData	= $this->output;
 
 			// replace tabs with spaces
-	        $sData	= str_replace("	",   		" ",   		$sData);
+			$sData	= str_replace("	",			" ",		$sData);
 
-	        // Strip ' : ' spaces around
-	        $sData	= preg_replace('/ *([=\+\:\|\^<>\{\};,]) */', '$1', $sData);
+			// Strip ' : ' spaces around
+			$sData	= preg_replace('/ *([=\+\:\|\^<>\{\};,]) */', '$1', $sData);
 
-	        // strip all more than one spaces
-	        $sData	= preg_replace("/\s\s+/",	"",			$sData);
+			// strip all more than one spaces
+			$sData	= preg_replace("/\s\s+/",	"",			$sData);
 
-	        $sData	= preg_replace("/;;+/",		";",		$sData);
-//	        $sData	= str_replace(";}",			"}",		$sData);	// If enabled, causes vendor prefixes regexp issues, todo later
+			$sData	= preg_replace("/;;+/",		";",		$sData);
+//			$sData	= str_replace(";}",			"}",		$sData);	// If enabled, causes vendor prefixes regexp issues, todo later
 
-	        $this->output	= $sData;
-	    }
+			$this->output	= $sData;
+		}
 
-	    function obfuscate()
-	    {
+		function obfuscate() {
 			$sCSS	= $this->output;
 
 			// Rewrite display:inline-block to display:inline (IE8-)
@@ -76,17 +69,20 @@
 			$sAfter		= "-$2$3$4";
 			// Opera
 			$sCSS	= preg_replace("/([\s;{])(text-overflow\s*:\s*)([^\n;}]+)([\n;}])/", $sBefore . "o" . $sAfter, $sCSS);
+			$sCSS	= preg_replace("/([\s;{])(transition\-?\w*\s*:\s*)([^\n;}]+)([\n;}])/", $sBefore . "o" . $sAfter, $sCSS);
 			// WebKit
 			$sCSS	= preg_replace("/([\s;{])(text-overflow\s*:\s*)([^\n;}]+)([\n;}])/", $sBefore . "webkit" . $sAfter, $sCSS);
 			$sCSS	= preg_replace("/([\s;{])(box-shadow\s*:\s*)([^\n;}]+)([\n;}])/", $sBefore . "webkit" . $sAfter, $sCSS);
 			$sCSS	= preg_replace("/([\s;{])(outline-radius\s*:\s*)([^\n;}]+)([\n;}])/", $sBefore . "webkit" . $sAfter, $sCSS);
 			$sCSS	= preg_replace("/([\s;{])(border-radius\s*:\s*)([^\n;}]+)([\n;}])/", $sBefore . "webkit" . $sAfter, $sCSS);
+			$sCSS	= preg_replace("/([\s;{])(transition\-?\w*\s*:\s*)([^\n;}]+)([\n;}])/", $sBefore . "webkit" . $sAfter, $sCSS);
 			// Gecko
 			$sCSS	= preg_replace("/([\s;{])(text-overflow\s*:\s*)([^\n;}]+)([\n;}])/", $sBefore . "moz" . $sAfter, $sCSS);
 			$sCSS	= preg_replace("/([\s;{])(box-shadow\s*:\s*)([^\n;}]+)([\n;}])/", $sBefore . "moz" . $sAfter, $sCSS);
 			$sCSS	= preg_replace("/([\s;{])(outline-radius\s*:\s*)([^\n;}]+)([\n;}])/", $sBefore . "moz" . $sAfter, $sCSS);
 			$sCSS	= preg_replace("/([\s;{])(border-radius\s*:\s*)([^\n;}]+)([\n;}])/", $sBefore . "moz" . $sAfter, $sCSS);
 			$sCSS	= preg_replace("/([\s;{])(box-sizing\s*:\s*)([^\n;}]+)([\n;}])/", $sBefore . "moz" . $sAfter, $sCSS);
+			$sCSS	= preg_replace("/([\s;{])(transition\-?\w*\s*:\s*)([^\n;}]+)([\n;}])/", $sBefore . "moz" . $sAfter, $sCSS);
 			//
 			$sBefore	= $sBefore . 'moz-border-radius-';
 			$sAfter		= ':$3$4';
@@ -120,7 +116,7 @@
 				$sCSS	= join('', $aCSS);
 			}
 			$this->output	= $sCSS;
-	    }
+		}
 	}
 
 	function cCSSCompiler_replaceOpacity($matches) {
