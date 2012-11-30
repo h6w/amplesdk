@@ -19,7 +19,6 @@ cXULElement_box.prototype.$getTagOpen	= function() {
 	return '<div class="xul-' + this.localName +(this.attributes["class"] ? " " + this.attributes["class"] : "") + '" style="' +
 		(sWidth ? 'width:' + (isNaN(parseInt(sWidth)) ? sWidth : sWidth + 'px;') : '')+
 		(sHeight ? 'height:' + (isNaN(parseInt(sHeight)) ? sHeight : sHeight + 'px;') : '')+
-        this.getAttribute("style")+
 	'">';
 };
 
