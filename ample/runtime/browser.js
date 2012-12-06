@@ -107,7 +107,7 @@ function fBrowser_render(oNode) {
 				}
 				else {
 					// Add namespace declarations to the shadow content
-					if (!("xmlns" + (oNode.prefix ? ':' + oNode.prefix : '') in oNode.attributes) || (oNode.namespaceURI != sNS_SVG && oNode.namespaceURI != sNS_XHTML))
+					if (!fNamedNodeMap_getNamedItem(oNode.attributes, "xmlns" + (oNode.prefix ? ':' + oNode.prefix : '')) || (oNode.namespaceURI != sNS_SVG && oNode.namespaceURI != sNS_XHTML))
 						sHtml	= sHtml.replace(/^(<(?:(\w+)(:))?(\w+))/, '$1 ' + "xmlns" + '$3$2="' + (oNode.namespaceURI == sNS_SVG ? sNS_SVG : sNS_XHTML) + '"');
 					oElement	= oUADocument.importNode(fBrowser_parseXML('<!' + "DOCTYPE" + ' ' + "div" + '[' + sBrowser_entities + ']>' + '<div' + ' ' + "xmlns" + '="' + sNS_XHTML + '">' + sHtml + '</div>').documentElement, true);
 				}
@@ -1020,9 +1020,9 @@ function fBrowser_processScripts() {
 			// retrieve namespaces list (in older than IE6, attributes on script tag are not parsed into collection)
 			if (bTrident && (nVersion < 6 || nVersion > 8)) {
 				if (aAttributes	= oElementDOM.outerHTML.match(/<script([^\>]+)/i)[1].match(/[^=]+=("[^"]+"|[^\s]+)/gi))
-					for (var nAttribute = 0; oAttribute = aAttributes[nAttribute]; nAttribute++)
-						if (oAttribute.match(/\s([^=]+)="?([^"]+)"?/i) && (sAttribute = cRegExp.$1) != "type")
-							hAttributes[sAttribute]	= cRegExp.$2;
+					for (var nAttribute = 0, aMatch; oAttribute = aAttributes[nAttribute]; nAttribute++)
+						if ((aMatch = oAttribute.match(/\s([^=]+)="?([^"]+)"?/i)) && (sAttribute = aMatch[1]) != "type")
+							hAttributes[sAttribute]	= aMatch[2];
 			}
 			else {
 				aAttributes	= oElementDOM.attributes;
@@ -1053,19 +1053,19 @@ function fBrowser_processScripts() {
 				// import XML DOM into Ample DOM
 				oElement	= fDocument_importNode(oAmple_document, oDocument.documentElement, true);
 				// Remove prefixes declarations (already available from root)
-				if (!bReferenced) {
-					for (sAttribute in oAmple.prefixes) {
-						sPrefix	= "xmlns" + (sAttribute == '' ? '' : ':' + sAttribute);
-						if (sPrefix in hAttributes && hAttributes[sPrefix] == oAmple.prefixes[sAttribute])
-							delete oElement.attributes[sPrefix];
-					}
+//				if (!bReferenced) {
+//					for (sAttribute in oAmple.prefixes) {
+//						sPrefix	= "xmlns" + (sAttribute == '' ? '' : ':' + sAttribute);
+//						if (sPrefix in hAttributes && hAttributes[sPrefix] == oAmple.prefixes[sAttribute])
+//							delete oElement.attributes[sPrefix];
+//					}
 /*
 					// Change root element name to script
 					oElement.nodeName	=
 					oElement.localName	=
 					oElement.tagName	= "script";
 */
-				}
+//				}
 				// render Ample DOM
 				if (bTrident && nVersion < 9) {
 					oElementNew	= oUADocument.createElement("div");
